@@ -32,7 +32,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8)->nullable(); // إحداثيات خط العرض
             $table->decimal('longitude', 11, 8)->nullable(); // إحداثيات خط الطول
             $table->enum('status', ['available', 'sold', 'rented', 'pending'])->default('available'); // حالة العقار
-            $table->json('images')->nullable(); // قائمة الصور (مسار الصورة، نوع الغرفة، وصف)
+            $table->string('image'); // تغيير الحقل من JSON إلى string
             $table->timestamps();
         });
     }

@@ -173,6 +173,7 @@ img.rounded-circle {
     h3 {
         font-size: 1.5rem;
     }
+
 }
 </style>
 <section class="contact-us py-5">
@@ -180,14 +181,23 @@ img.rounded-circle {
         <!-- العنوان الرئيسي -->
         <h1 class="text-center mb-5 display-4 fw-bold">تواصل مع فريق العقارات</h1>
         <p class="text-center lead mb-5">نحن هنا للإجابة على استفساراتك ومساعدتك في العثور على العقار المثالي</p>
-
+        @if (session('success'))
+        <div class="alert alert-success text-center" style="color: red; font-size: x-large;font-weight: 500;">
+            {{ session('success') }}
+        </div>
+    @endif
         <div class="row g-5">
             <!-- نموذج الاتصال -->
             <div class="col-xl-6 col-lg-7 mb-5">
                 <div class="card shadow-lg p-5 rounded-4">
                     <h3 class="mb-4 fw-semibold">أرسل استفسارك</h3>
-                    <form action="" method="POST">
+                    <form action="{{url('contact/insert')}}" method="POST">
                         @csrf
+                        @if (session('success'))
+                        <div class="alert alert-success text-center">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                         <!-- الاسم -->
                         <div class="mb-4">

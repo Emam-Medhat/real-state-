@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Cairo Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap" rel="stylesheet">
     <!-- Main CSS -->
@@ -26,7 +27,7 @@
         }
 
         /* تنسيق الهيدر */
-        .main-header {
+        .header-main {
             background: linear-gradient(135deg, #0077b6, #ff4d6d); /* أزرق مبهج إلى وردي جذاب */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
             position: sticky;
@@ -35,14 +36,14 @@
             padding: 15px 0;
         }
 
-        .container {
-            max-width: 1300px;
+        .header-container {
+            max-width: 110000px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
         /* تنسيق اللوجو */
-        .logo {
+        .header-logo {
             color: #fff;
             font-size: 2.2rem;
             font-weight: 700;
@@ -53,19 +54,21 @@
             transition: all 0.3s ease;
         }
 
-        .logo:hover {
+        .header-logo:hover {
             color: #ffd60a; /* ذهبي مبهج */
             transform: scale(1.05);
         }
 
         /* تنسيق النافبار */
-        .main-nav {
+        .header-nav {
+            position: relative;
+            left: 10%;
             display: flex;
             align-items: center;
             gap: 2.5rem;
         }
 
-        .main-nav a {
+        .header-nav a {
             color: #fff;
             text-decoration: none;
             font-size: 1.2rem;
@@ -76,7 +79,7 @@
         }
 
         /* تأثير الهافر: شريط ملون */
-        .main-nav a::before {
+        .header-nav a::before {
             content: '';
             position: absolute;
             width: 0;
@@ -87,17 +90,17 @@
             transition: width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .main-nav a:hover::before {
+        .header-nav a:hover::before {
             width: 100%;
         }
 
-        .main-nav a:hover {
+        .header-nav a:hover {
             color: #ffd60a;
             transform: translateY(-2px);
         }
 
         /* زر تسجيل الدخول */
-        .login-btn {
+        .btn-login {
             background: #ffd60a;
             color: #0077b6;
             padding: 10px 25px;
@@ -107,7 +110,7 @@
             transition: all 0.3s ease;
         }
 
-        .login-btn:hover {
+        .btn-login:hover {
             background: #fff;
             color: #ff4d6d;
             transform: translateY(-3px);
@@ -115,19 +118,19 @@
         }
 
         /* أنيميشن الظهور */
-        .main-nav a {
+        .header-nav a {
             opacity: 0;
             transform: translateY(10px);
-            animation: slideIn 0.5s ease forwards;
+            animation: navSlideIn 0.5s ease forwards;
         }
 
-        .main-nav a:nth-child(1) { animation-delay: 0.1s; }
-        .main-nav a:nth-child(2) { animation-delay: 0.2s; }
-        .main-nav a:nth-child(3) { animation-delay: 0.3s; }
-        .main-nav a:nth-child(4) { animation-delay: 0.4s; }
-        .main-nav a:nth-child(5) { animation-delay: 0.5s; }
+        .header-nav a:nth-child(1) { animation-delay: 0.1s; }
+        .header-nav a:nth-child(2) { animation-delay: 0.2s; }
+        .header-nav a:nth-child(3) { animation-delay: 0.3s; }
+        .header-nav a:nth-child(4) { animation-delay: 0.4s; }
+        .header-nav a:nth-child(5) { animation-delay: 0.5s; }
 
-        @keyframes slideIn {
+        @keyframes navSlideIn {
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -135,7 +138,7 @@
         }
 
         /* زر البرجر */
-        .burger {
+        .menu-toggle {
             display: none;
             color: #fff;
             font-size: 1.8rem;
@@ -143,32 +146,32 @@
             transition: transform 0.3s ease;
         }
 
-        .burger:hover {
+        .menu-toggle:hover {
             transform: rotate(90deg);
         }
 
         /* تنسيق الفوتير */
-        .main-footer {
+        .footer-main {
             background: linear-gradient(135deg, #0077b6, #023e8a); /* تدرج أزرق متناسق */
             color: #fff;
             padding: 60px 0;
             margin-top: 40px;
         }
 
-        .main-footer .container {
+        .footer-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
 
-        .footer-section h4 {
+        .footer-section-title {
             font-size: 1.5rem;
             margin-bottom: 20px;
             color: #ffd60a;
         }
 
-        .footer-section p,
-        .footer-section a {
+        .footer-section-text,
+        .footer-section-link {
             color: #e9ecef;
             font-size: 1rem;
             line-height: 1.8;
@@ -176,30 +179,21 @@
             transition: color 0.3s ease;
         }
 
-        .footer-section a:hover {
+        .footer-section-link:hover {
             color: #ffd60a;
         }
 
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .social-links a {
+        .footer-social a {
             font-size: 1.5rem;
             margin-left: 15px;
             color: #e9ecef;
         }
 
-        .social-links a:hover {
+        .footer-social a:hover {
             color: #ffd60a;
         }
 
-        .footer-bottom {
+        .footer-bottom-bar {
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding-top: 20px;
             text-align: center;
@@ -209,7 +203,7 @@
 
         /* استجابة للشاشات الصغيرة */
         @media (max-width: 768px) {
-            .main-nav {
+            .header-nav {
                 flex-direction: column;
                 gap: 1.5rem;
                 background: linear-gradient(135deg, #0077b6, #ff4d6d);
@@ -222,24 +216,24 @@
                 border-radius: 0 0 15px 15px;
             }
 
-            .main-nav.active {
+            .header-nav.active {
                 display: flex;
             }
 
-            .burger {
+            .menu-toggle {
                 display: block;
             }
 
-            .login-btn {
+            .btn-login {
                 width: fit-content;
             }
 
-            .main-footer .container {
+            .footer-container {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
 
-            .social-links a {
+            .footer-social a {
                 margin: 0 10px;
             }
         }
@@ -247,23 +241,27 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="main-header">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a href="{{ route('home') }}" class="logo">🏠 منصة العقارات</a>
-            <div class="burger">☰</div>
-            <nav class="main-nav">
+    <header class="header-main">
+        <div class="header-container d-flex justify-content-between align-items-center">
+            <a href="{{ route('home') }}" class="header-logo">🏠 عقارك </a>
+            <div class="menu-toggle">☰</div>
+            <nav class="header-nav">
                 <a href="{{ route('home') }}">الرئيسية</a>
-                <a href="{{ route('search') }}">بحث</a>
+                {{-- <a href="{{ route('search') }}">بحث</a> --}}
                 <a href="{{ url('crate/propeties') }}">أضف عقار</a>
-                <a href="{{ url('companies') }}">شركات الهندسية</a>
+                <a href="{{ url('property/all') }}"> العقارات</a>
+                <a href="{{ url('engineering-companies/create') }}"> اضافة شركة هندسية</a>
+
+
+                <a href="{{ url('engineering-companies') }}">شركات الهندسية</a>
+                <a href="{{ url('maintenance_requests/create') }}"> الصيانة</a>
                 <a href="{{ url('contact') }}">تواصل معنا </a>
                 <a href="{{ url('team') }}"> فريق العمل </a>
 
-
                 @guest
-                    <a href="{{ route('login') }}" class="login-btn">تسجيل الدخول</a>
+                    <a href="{{ route('login') }}" class="btn-login">تسجيل الدخول</a>
                 @else
-                    <a href="{{ route('profile.edit') }}" class="login-btn">ملفي الشخصي</a>
+                    <a href="{{ route('profile.show') }}" class="btn-login">ملفي الشخصي</a>
                 @endguest
             </nav>
         </div>
@@ -275,39 +273,38 @@
     </main>
 
     <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
+    <footer class="footer-main">
+        <div class="footer-container">
             <!-- عن المنصة -->
-            <div class="footer-section">
-                <h4>عن منصة العقارات</h4>
-                <p>منصة العقارات هي وجهتك المثالية لشراء، بيع، أو تأجير العقارات في جميع أنحاء المنطقة. نسعى لتوفير تجربة سلسة وموثوقة مع أفضل العروض.</p>
+            <div>
+                <h4 class="footer-section-title">عن منصة العقارات</h4>
+                <p class="footer-section-text">منصة العقارات هي وجهتك المثالية لشراء، بيع، أو تأجير العقارات في جميع أنحاء المنطقة. نسعى لتوفير تجربة سلسة وموثوقة مع أفضل العروض.</p>
             </div>
 
             <!-- روابط سريعة -->
-            <div class="footer-section">
-                <h4>روابط سريعة</h4>
+            <div>
+                <h4 class="footer-section-title">روابط سريعة</h4>
                 <ul>
-                    <li><a href="{{ route('home') }}">الرئيسية</a></li>
-                    <li><a href="{{ route('search') }}">البحث عن عقار</a></li>
-                    <li><a href="{{ url('crate/propeties') }}">إضافة عقار</a></li>
-                    <li><a href="{{ url('contact') }}"> تواصل معنا</a></li>
-                    <li><a href="{{ url('companies') }}">شركات التشطيب</a></li>
-
+                    <li><a href="{{ route('home') }}" class="footer-section-link">الرئيسية</a></li>
+                    {{-- <li><a href="{{ route('search') }}" class="footer-section-link">البحث عن عقار</a></li> --}}
+                    <li><a href="{{ url('crate/propeties') }}" class="footer-section-link">إضافة عقار</a></li>
+                    <li><a href="{{ url('contact') }}" class="footer-section-link">تواصل معنا</a></li>
+                    <li><a href="{{ url('engineering-companies') }}" class="footer-section-link">شركات الهندسية</a></li>
                 </ul>
             </div>
 
             <!-- تواصلوا معنا -->
-            <div class="footer-section">
-                <h4>تواصلوا معنا</h4>
-                <p>البريد الإلكتروني: <a href="mailto:info@realestate.com">info@realestate.com</a></p>
-                <p>الهاتف: <a href="tel:+966123456789">+966 123 456 789</a></p>
-                <p>العنوان: الرياض، المملكة العربية السعودية</p>
+            <div>
+                <h4 class="footer-section-title">تواصلوا معنا</h4>
+                <p>البريد الإلكتروني: <a href="mailto:info@realestate.com" class="footer-section-link">info@realestate.com</a></p>
+                <p>الهاتف: <a href="tel:+966123456789" class="footer-section-link">+2010201020</a></p>
+                <p>العنوان: المنصورة :الدقهلية</p>
             </div>
 
             <!-- وسائل التواصل -->
-            <div class="footer-section">
-                <h4>تابعنا</h4>
-                <div class="social-links">
+            <div>
+                <h4 class="footer-section-title">تابعنا</h4>
+                <div class="footer-social">
                     <a href="#" aria-label="فيسبوك"><i class="bi bi-facebook"></i></a>
                     <a href="#" aria-label="تويتر"><i class="bi bi-twitter"></i></a>
                     <a href="#" aria-label="إنستغرام"><i class="bi bi-instagram"></i></a>
@@ -315,19 +312,17 @@
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
+        <div class="footer-bottom-bar">
             <p>© 2025 منصة العقارات. جميع الحقوق محفوظة.</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Icons (لأيقونات التواصل) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script>
         // تفعيل زر البرجر
-        document.querySelector('.burger').addEventListener('click', () => {
-            document.querySelector('.main-nav').classList.toggle('active');
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+            document.querySelector('.header-nav').classList.toggle('active');
         });
     </script>
 </body>

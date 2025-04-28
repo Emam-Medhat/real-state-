@@ -1,3 +1,10 @@
+@extends('layouts.app')
+
+@section('title', 'تواصل معنا')
+
+@section('content')
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -147,7 +154,7 @@
             <h3>المعلومات الأساسية</h3>
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="title">العنوان</label>
+                    <label for="title">اسم العقار</label>
                     <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
                 </div>
 
@@ -268,19 +275,19 @@
                 </div>
             </div>
 
+        </div>
             <h3>الصور</h3>
             <div class="form-group">
                 <label>إضافة صور العقار</label>
                 <div id="image-inputs">
                     <div class="image-input-group">
-                        <input type="file" name="images[0][file]" accept="image/*" class="form-control image-file" onchange="previewImage(this)">
-                        <input type="text" name="images[0][room_type]" placeholder="نوع الغرفة (مثل: غرفة نوم)" value="{{ old('images.0.room_type') }}" class="form-control">
-                        <input type="text" name="images[0][caption]" placeholder="وصف الصورة" value="{{ old('images.0.caption') }}" class="form-control">
-                        <img class="image-preview" alt="معاينة الصورة">
-                        <i class="fas fa-trash remove-image" onclick="removeImage(this)"></i>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">صورة العقار</label>
+                            <input type="file" name="image" id="image" class="form-control">
+                        </div> 
                     </div>
                 </div>
-                <button type="button" class="btn-add-image" onclick="addImageInput()"><i class="fas fa-plus me-2"></i>إضافة صورة أخرى</button>
+                {{-- <button type="button" class="btn-add-image" onclick="addImageInput()"><i class="fas fa-plus me-2"></i>إضافة صورة أخرى</button> --}}
             </div>
 
             <div class="text-center section-divider">
@@ -291,7 +298,7 @@
 
     <!-- Bootstrap 5 JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    {{-- <script>
         let imageIndex = 1;
 
         function addImageInput() {
@@ -327,6 +334,9 @@
                 preview.style.display = 'none';
             }
         }
-    </script>
+    </script> --}}
 </body>
 </html>
+
+
+@endsection

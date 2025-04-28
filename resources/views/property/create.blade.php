@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'أضف عقار')
+@section('title', 'الملف الشخصي')
+
+@section('content')
 <style>
     /* Navbar Styling */
 .navbar {

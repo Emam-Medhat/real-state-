@@ -1,503 +1,721 @@
+
 @extends('layouts.app')
 
 @section('title', 'الرئيسية - بيتك')
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
     /* دعم النصوص العربية */
-body {
-    font-family: 'Cairo', sans-serif;
-    direction: rtl;
-    background-color: #f1f3f5;
-}
-
-/* تنسيق الصفحات العام */
-section {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-}
-
-/* تنسيق الحاوية */
-.container-fluid {
-    max-width: 1600px;
-}
-
-/* تنسيق العناوين */
-.display-2 {
-    font-size: 4.5rem;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-h2 {
-    font-size: 3rem;
-    color: #1a252f;
-}
-
-h3 {
-    font-size: 2rem;
-    color: #1a252f;
-}
-
-/* تنسيق البطاقات */
-.card {
-    border: none;
-    border-radius: 1.5rem;
-    background-color: #fff;
-    transition: transform 0.4s, box-shadow 0.4s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-/* تنسيق بطاقات الفريق */
-.team-card {
-    overflow: hidden;
-}
-
-.team-img {
-    height: 350px;
-    object-fit: cover;
-    border-radius: 1.5rem 1.5rem 0 0;
-}
-
-/* تنسيق بطاقات الليدر */
-.leader-card {
-    background: linear-gradient(180deg, #f8f9fa, #ffffff);
-}
-
-.leader-img {
-    height: 400px;
-    object-fit: cover;
-    border-radius: 1.5rem 1.5rem 0 0;
-}
-
-/* تنسيق بطاقات العقارات */
-.property-card {
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-}
-
-.property-img {
-    height: 400px;
-    object-fit: cover;
-    border-radius: 1.5rem 1.5rem 0 0;
-}
-
-/* تنسيق بطاقات المدونة */
-.blog-card,
-.news-img {
-    height: 300px;
-    object-fit: cover;
-}
-
-/* تنسيق الهيرو */
-.hero {
-    height: 100vh;
-    overflow: hidden;
-}
-
-.hero .carousel-inner {
-    height: 100%;
-}
-
-.hero .carousel-item {
-    height: 100vh;
-}
-
-.hero .carousel-item img {
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.5);
-}
-
-.hero-video {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    filter: brightness(0.5);
-}
-
-.hero .carousel-caption {
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 3rem;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 1.5rem;
-    max-width: 900px;
-}
-
-.hero .search-form {
-    margin-top: 2rem;
-}
-
-.hero .form-control,
-.hero .form-select {
-    border: none;
-    padding: 1rem;
-    font-size: 1.2rem;
-    border-radius: 0.75rem;
-}
-
-.hero .btn-primary {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-}
-
-/* تنسيق الأقسام */
-.featured-section,
-.why-us-section,
-.news-section,
-.stats-section,
-.map-section,
-.partners-section,
-.cta-section {
-    padding: 6rem 0;
-}
-
-.why-us-section,
-.partners-section {
-    background: linear-gradient(180deg, #f8f9fa, #ffffff);
-}
-
-.stats-section {
-    background: linear-gradient(90deg, #007bff, #00aaff);
-}
-
-.cta-section .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.cta-section h2,
-.cta-section p {
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* تنسيق الفلاتر والنماذج */
-.form-control,
-.form-select {
-    border-radius: 0.75rem;
-    padding: 0.75rem;
-    font-size: 1.1rem;
-}
-
-/* تنسيق الأزرار */
-.btn-primary {
-    background: linear-gradient(90deg, #007bff, #00aaff);
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.2rem;
-    border-radius: 0.75rem;
-    transition: background 0.4s, transform 0.3s;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(90deg, #0056b3, #007bff);
-    transform: translateY(-3px);
-}
-
-.btn-outline-primary {
-    border-radius: 0.75rem;
-    transition: background-color 0.4s, transform 0.3s;
-}
-
-.btn-outline-primary:hover {
-    background-color: #007bff;
-    color: #fff;
-    transform: translateY(-3px);
-}
-
-.btn-outline-light {
-    border-color: #fff;
-    color: #fff;
-}
-
-.btn-outline-light:hover {
-    background: #fff;
-    color: #007bff;
-}
-
-/* تنسيق التواصل الاجتماعي */
-.social-links .btn {
-    width: 50px;
-    height: 50px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    transition: background-color 0.4s, transform 0.3s;
-}
-
-.social-links .btn:hover {
-    background-color: #007bff;
-    color: #fff;
-    transform: scale(1.15);
-}
-
-/* تنسيق القيم والإنجازات */
-.card .bi,
-.stats-section .bi {
-    color: #ffd700;
-}
-
-/* تنسيق الخريطة */
-iframe {
-    border-radius: 1.5rem;
-}
-
-/* تنسيق معرض الصور */
-.carousel-inner img {
-    height: 600px;
-    object-fit: cover;
-    border-radius: 1.5rem 1.5rem 0 0;
-}
-
-/* تنسيق المدونة */
-.badge {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-}
-
-.list-unstyled a {
-    transition: color 0.3s;
-}
-
-.list-unstyled a:hover {
-    color: #0056b3;
-}
-
-/* تنسيق الشركاء */
-.partner-logo {
-    max-height: 100px;
-    filter: grayscale(50%);
-    transition: filter 0.3s;
-}
-
-.partner-logo:hover {
-    filter: grayscale(0);
-}
-
-/* استجابية */
-@media (max-width: 1200px) {
-    .display-2 {
-        font-size: 3.5rem;
+    body {
+        font-family: 'Cairo', sans-serif;
+        direction: rtl;
+        background-color: #f1f3f5;
     }
 
-    h2 {
-        font-size: 2.5rem;
+    /* تنسيق الصفحات العام */
+    section {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
     }
 
-    .hero .carousel-caption {
-        padding: 2rem;
-    }
-}
-
-@media (max-width: 992px) {
-    .display-2 {
-        font-size: 2.5rem;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    .hero {
-        height: 80vh;
-    }
-
-    .hero .carousel-item,
-    .hero-video {
-        height: 80vh;
-    }
-
-    .team-img,
-    .property-img,
-    .blog-img,
-    .carousel-inner img {
-        height: 300px;
-    }
-
-    .leader-img {
-        height: 300px;
-    }
-}
-
-@media (max-width: 576px) {
+    /* تنسيق الحاوية */
     .container-fluid {
-        padding: 0 1rem;
+        max-width: 1600px;
     }
 
-    .card {
-        padding: 1.5rem !important;
-    }
-
+    /* تنسيق العناوين */
     .display-2 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        font-size: 3rem;
+        color: #1a252f;
     }
 
     h3 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        color: #1a252f;
     }
 
-    .hero {
-        height: 70vh;
+    /* تنسيق البطاقات */
+    .card {
+        border: none;
+        border-radius: 1.5rem;
+        background-color: #fff;
+        transition: transform 0.4s, box-shadow 0.4s;
     }
 
-    .hero .carousel-item,
-    .hero-video {
-        height: 70vh;
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
 
-    .hero .carousel-caption {
-        padding: 1rem;
+    /* تنسيق بطاقات الفريق */
+    .team-card {
+        overflow: hidden;
     }
 
-    .hero .form-control,
-    .hero .form-select,
-    .hero .btn-primary {
-        font-size: 1rem;
-        padding: 0.75rem;
+    .team-img {
+        height: 350px;
+        object-fit: cover;
+        border-radius: 1.5rem 1.5rem 0 0;
     }
 
-    .team-img,
-    .property-img,
-    .blog-img,
-    .carousel-inner img {
-        height: 250px;
+    /* تنسيق بطاقات الليدر */
+    .leader-card {
+        background: linear-gradient(180deg, #f8f9fa, #ffffff);
     }
 
     .leader-img {
-        height: 250px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 1.5rem 1.5rem 0 0;
     }
 
-    .map-section iframe {
-        height: 400px;
+    /* تنسيق بطاقات العقارات */
+    .property-card {
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
     }
+
+    .property-img {
+        height: 400px;
+        object-fit: cover;
+        border-radius: 1.5rem 1.5rem 0 0;
+    }
+
+    /* تنسيق بطاقات المدونة */
+    .blog-card,
+    .news-img {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    /* تنسيق الهيرو */
+    .hero {
+        height: 60vh;
+        overflow: hidden;
+        position: relative;
+        background: url('{{ asset('images/photo-1570129477492-45c003edd2be.avif') }}') center/cover no-repeat;
+    }
+
+    .hero .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    .hero .carousel-caption {
+        position: relative;
+        top: 25%;
+        right: 1%;
+        transform: translateY(-50%);
+        padding: 3rem;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 1.5rem;
+        max-width: 900px;
+        z-index: 2;
+    }
+
+    .hero .search-form {
+        margin-top: 2rem;
+    }
+
+    .hero .form-control,
+    .hero .form-select {
+        border: none;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 0.75rem;
+    }
+
+    .hero .btn-primary {
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+    }
+
+    /* تنسيق الأقسام */
+    .featured-section,
+    .why-us-section,
+    .news-section,
+    .stats-section,
+    .map-section,
+    .partners-section,
+    .cta-section {
+        padding: 6rem 0;
+    }
+
+    .why-us-section,
+    .partners-section {
+        background: linear-gradient(180deg, #f8f9fa, #ffffff);
+    }
+
+    .stats-section {
+        background: linear-gradient(90deg, #007bff, #00aaff);
+    }
+
+    .cta-section .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-section h2,
+    .cta-section p {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* تنسيق الفلاتر والنماذج */
+    .form-control,
+    .form-select {
+        border-radius: 0.75rem;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+    }
+
+    /* تنسيق الأزرار */
+    .btn-primary {
+        background: linear-gradient(90deg, #007bff, #00aaff);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1.2rem;
+        border-radius: 0.75rem;
+        transition: background 0.4s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #0056b3, #007bff);
+        transform: translateY(-3px);
+    }
+
+    .btn-outline-primary {
+        border-radius: 0.75rem;
+        transition: background-color 0.4s, transform 0.3s;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: #fff;
+        transform: translateY(-3px);
+    }
+
+    .btn-outline-light {
+        border-color: #fff;
+        color: #fff;
+    }
+
+    .btn-outline-light:hover {
+        background: #fff;
+        color: #007bff;
+    }
+
+    /* تنسيق التواصل الاجتماعي */
+    .social-links .btn {
+        width: 50px;
+        height: 50px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        transition: background-color 0.4s, transform 0.3s;
+    }
+
+    .social-links .btn:hover {
+        background-color: #007bff;
+        color: #fff;
+        transform: scale(1.15);
+    }
+
+    /* تنسيق القيم والإنجازات */
+    .card .bi,
+    .stats-section .bi {
+        color: #ffd700;
+    }
+
+    /* تنسيق الخريطة */
+    iframe {
+        border-radius: 1.5rem;
+    }
+
+    /* تنسيق معرض الصور */
+    .carousel-inner img {
+        height: 600px;
+        object-fit: cover;
+        border-radius: 1.5rem 1.5rem 0 0;
+    }
+
+    /* تنسيق المدونة */
+    .badge {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .list-unstyled a {
+        transition: color 0.3s;
+    }
+
+    .list-unstyled a:hover {
+        color: #0056b3;
+    }
+
+    /* تنسيق الشركاء */
+    .partner-logo {
+        max-height: 100px;
+        filter: grayscale(50%);
+        transition: filter 0.3s;
+    }
+
+    .partner-logo:hover {
+        filter: grayscale(0);
+    }
+
+    /* استجابية */
+    @media (max-width: 1200px) {
+        .display-2 {
+            font-size: 3.5rem;
+        }
+
+        h2 {
+            font-size: 4.5rem;
+        }
+
+        .hero .carousel-caption {
+            padding: 2rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .display-2 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .hero {
+            height: 80vh;
+        }
+
+        .team-img,
+        .property-img,
+        .blog-img,
+        .carousel-inner img {
+            height: 300px;
+        }
+
+        .leader-img {
+            height: 300px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .container-fluid {
+            padding: 0 1rem;
+        }
+
+        .card {
+            padding: 1.5rem !important;
+        }
+
+        .display-2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            height: 70vh;
+        }
+
+        .hero .carousel-caption {
+            padding: 1rem;
+        }
+
+        .hero .form-control,
+        .hero .form-select,
+        .hero .btn-primary {
+            font-size: 1rem;
+            padding: 0.75rem;
+        }
+
+        .team-img,
+        .property-img,
+        .blog-img,
+        .carousel-inner img {
+            height: 250px;
+        }
+
+        .leader-img {
+            height: 250px;
+        }
+
+        .map-section iframe {
+            height: 400px;
+        }
+        .property-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.property-card:hover {
+    transform: translateY(-5px);
+}
+
+.property-image-container {
+    height: 220px;
+    overflow: hidden;
+}
+
+.property-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    min-height: 60px; /* لضبط توازن العناوين */
+}
+
+.card-body p {
+    min-height: 70px;
+}
+
+.btn {
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+    }
+</style>
+<style>
+    <style>
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.image-container {
+    position: relative;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+    object-position: center;
+}
+
+.details strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
 }
 </style>
+</style>
+<style>.horizontal-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.news-card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    transition: transform 0.4s ease;
+}
+
+.news-card:hover {
+    transform: scale(1.03);
+}
+</style>
+{{-- <style>
+    /* تنسيقات مخصصة */
+    .carousel-wrapper {
+        position: relative;
+        padding: 0 40px; /* مساحة أكبر للأسهم */
+        overflow: hidden;
+    }
+
+    .carousel-track {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .property-card {
+        flex: 0 0 calc(33.333% - 20px); /* 3 عناصر في الصف */
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #007bff;
+        color: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.9;
+        transition: all 0.3s;
+    }
+
+    .carousel-btn:hover {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-btn.left { left: 10px; }
+    .carousel-btn.right { right: 10px; }
+
+    @media (max-width: 768px) {
+        .property-card {
+            flex: 0 0 calc(100% - 20px); /* عنصر واحد في الشاشات الصغيرة */
+        }
+
+        .carousel-btn {
+            width: 30px;
+            height: 30px;
+        }
+    }
+</style> --}}
 @if(session('success'))
     <div class="alert alert-success text-center mt-5">
         {{ session('success') }}
     </div>
 @endif
-
 <!-- قسم الهيرو -->
 <section class="hero position-relative">
-    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <video autoplay muted loop class="hero-video">
-                    <source src="{{ asset('videos/hero-bg.mp4') }}" type="video/mp4">
-                    <img src="{{ asset('images/hero1.jpg') }}" class="d-block w-100" alt="عقار فاخر">
-                </video>
-                <div class="carousel-caption">
-                    <h1 class="display-2 fw-bold animate__animated animate__fadeInDown">مرحبًا بك في عالم العقارات الفاخرة</h1>
-                    <p class="lead mb-4 animate__animated animate__fadeInUp">ابحث عن منزل أحلامك أو استثمر في أفضل الفرص العقارية</p>
-                    <form class="search-form mx-auto" action="{{ route('property.store') }}" method="GET">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <select name="type" class="form-select" required>
-                                    <option value="">نوع العقار</option>
-                                    <option value="شقة">شقة</option>
-                                    <option value="فيلا">فيلا</option>
-                                    <option value="أرض">أرض</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" name="location" class="form-control" placeholder="المدينة أو الحي" required>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary w-100">ابحث الآن</button>
-                            </div>
-                        </div>
-                    </form>
+    <div class="hero-overlay"></div>
+    <div class="carousel-caption">
+        <h1 class="display-2 fw-bold animate__animated animate__fadeInDown">مرحبًا بك في عالم العقارات الفاخرة</h1>
+        <p class="lead mb-4 animate__animated animate__fadeInUp">ابحث عن منزل أحلامك أو استثمر في أفضل الفرص العقارية</p>
+        {{-- <form action="{{ route('property.search') }}" method="GET">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select name="type" class="form-select" required>
+                        <option value="">نوع العقار</option>
+                        <option value="rent">إيجار</option>
+                        <option value="sale">بيع</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="location" class="form-control" placeholder="المدينة أو الحي" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">ابحث الآن</button>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/hero2.jpg') }}" class="d-block w-100" alt="فيلا حديثة">
-                <div class="carousel-caption">
-                    <h1 class="display-2 fw-bold animate__animated animate__fadeInDown">عيش الرفاهية بأسلوبك</h1>
-                    <p class="lead mb-4 animate__animated animate__fadeInUp">اكتشف مجموعتنا الحصرية من العقارات المميزة</p>
-                    <form class="search-form mx-auto" action="{{ route('property.store') }}" method="GET">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <select name="type" class="form-select" required>
-                                    <option value="">نوع العقار</option>
-                                    <option value="شقة">شقة</option>
-                                    <option value="فيلا">فيلا</option>
-                                    <option value="أرض">أرض</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" name="location" class="form-control" placeholder="المدينة أو الحي" required>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary w-100">ابحث الآن</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">السابق</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">التالي</span>
-        </button>
+        </form> --}}
     </div>
 </section>
 
+
+
 <!-- قسم العقارات المميزة -->
+
+
 <section class="featured-section py-5">
     <div class="container-fluid">
-        <h2 class="text-center mb-5 fw-bold"><i class="bi bi-star-fill me-2 text-warning"></i>عقارات مميزة</h2>
-        <div class="row g-5">
-            @forelse ($properties as $property)
-            <div class="col-lg-4 col-md-6">
-                <div class="card shadow-lg rounded-4 overflow-hidden property-card" data-parallax>
-                    <img src="{{ asset('storage/' . (json_decode($property->images, true)[0]['path'] ?? 'default.jpg')) }}" class="card-img-top property-img" alt="{{ $property->title }}">
-                    <div class="card-body p-4">
-                        <h3 class="card-title fw-semibold mb-3">{{ $property->title }}</h3>
-                        <p class="text-muted mb-3">
-                            <i class="fas fa-map-marker-alt me-1"></i>{{ $property->city . ($property->neighborhood ? ', ' . $property->neighborhood : '') }}<br>
-                            <i class="fas fa-bed me-1"></i>{{ $property->bedrooms }} غرف •
-                            <i class="fas fa-bath me-1"></i>{{ $property->bathrooms }} حمام •
-                            <i class="fas fa-ruler-combined me-1"></i>{{ $property->area ?? 'غير محدد' }} م²
-                        </p>
-                        <h4 class="text-primary mb-4">{{ number_format($property->price) }} جنيه</h4>
-                        <div class="d-flex gap-2">
-                            <a href="{{ route('property.show', $property->id) }}" class="btn btn-outline-primary flex-grow-1">عرض التفاصيل</a>
-                            <a href="{{ url('contact') }}" class="btn btn-primary"><i class="fas fa-telephone"></i></a>
-                        </div>
+        <h2 class="text-center mb-5 fw-bold">
+            <i class="bi bi-star-fill me-2 text-warning"></i>عقارات مميزة
+        </h2>
+
+        <div class="carousel-wrapper position-relative">
+            <button class="carousel-btn left" onclick="moveCarousel(-1)"><i class="bi bi-chevron-right"></i></button>
+            <button class="carousel-btn right" onclick="moveCarousel(1)"><i class="bi bi-chevron-left"></i></button>
+
+            <div class="carousel-track d-flex">
+                @forelse ($properties as $property)
+                <div class="property-card flex-shrink-0">
+                    <div class="property-image-container">
+                        <img src="{{ asset('storage/' . $property->image) }}" alt="{{ $property->title }}" class="w-100">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $property->title }}</h5>
+                        <p class="text-muted small">{{ $property->city }}</p>
+                        <h4 class="text-primary">{{ number_format($property->price) }} جنيه</h4>
+                        <a href="{{ route('property.show', $property->id) }}" class="btn btn-primary w-100">عرض التفاصيل</a>
                     </div>
                 </div>
+                @empty
+                <div class="text-center text-muted fs-4 w-100">لا توجد عقارات متاحة حاليًا.</div>
+                @endforelse
             </div>
-        @empty
-            <div class="col-12 text-center">
-                <p class="text-muted fs-4">لا توجد عقارات متاحة حاليًا. ابقَ على تواصل!</p>
-            </div>
-        @endforelse
-        </div>
-        <div class="text-center mt-5">
-            <a href="{{ route('property.store') }}" class="btn btn-primary btn-lg">استكشف كل العقارات</a>
         </div>
     </div>
+
+    <style>
+        .featured-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .property-card {
+            width: 300px;
+            margin: 0 10px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.1);
+            overflow: hidden;
+        }
+
+        .property-image-container img {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .text-primary {
+            font-weight: 700;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(67, 97, 238, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(67, 97, 238, 1);
+        }
+
+        .carousel-btn.left {
+            right: 10px;
+        }
+
+        .carousel-btn.right {
+            left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .property-card {
+                width: 250px;
+            }
+            .property-image-container img {
+                height: 150px;
+            }
+            .card-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+
+    <script>
+        let currentIndex = 0;
+        const track = document.querySelector('.carousel-track');
+        const cards = document.querySelectorAll('.property-card');
+        const cardWidth = cards[0]?.offsetWidth + 20; // Card width + margin
+
+        function moveCarousel(direction) {
+            if (!cards.length) return;
+
+            currentIndex += direction;
+            const maxIndex = cards.length - Math.floor(window.innerWidth / cardWidth);
+
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            } else if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+
+            track.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+        }
+    </script>
 </section>
+
 
 <!-- قسم لماذا نحن -->
 <section class="why-us-section py-5 bg-light">
@@ -540,29 +758,266 @@ iframe {
 <section class="news-section py-5">
     <div class="container-fluid">
         <h2 class="text-center mb-5 fw-bold"><i class="bi bi-newspaper me-2"></i>آخر الأخبار العقارية</h2>
-        <div class="row g-5">
-            @forelse ($properties as $post)
-                <div class="col-lg-4 col-md-6">
-                    <div class="card shadow-lg rounded-4 overflow-hidden">
-                        <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top news-img" alt="{{ $post->title }}">
-                        <div class="card-body p-4">
-                            <span class="badge bg-primary mb-2">{{ $post->category }}</span>
-                            <h4 class="card-title fw-semibold mb-3">{{ $post->title }}</h4>
-                            <p class="text-muted mb-3">{{ $post->created_at->format('d M Y') }}</p>
-                            <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                            {{-- <a href="{{ route('blog.show', $post->id) }}" class="btn btn-outline-primary">اقرأ المزيد</a> --}}
-                        </div>
-                    </div>
+        <div class="news-container d-flex flex-nowrap overflow-hidden">
+            @forelse ($properties->take(4) as $post)
+            <div class="news-card card shadow-lg rounded-4 overflow-hidden me-3 flex-shrink-0" style="width: 300px;">
+                <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top news-img" alt="{{ $post->title }}" style="height: 180px; object-fit: cover;">
+                <div class="card-body p-3">
+                    <span class="badge bg-primary mb-2">{{ $post->category }}</span>
+                    <h4 class="card-title fw-semibold mb-2" style="font-size: 1.1rem;">{{ $post->title }}</h4>
+                    <p class="text-muted mb-2" style="font-size: 0.85rem;">{{ $post->created_at->format('d M Y') }}</p>
+                    <p class="card-text" style="font-size: 0.9rem;">{{ Str::limit($post->content, 50) }}</p>
                 </div>
+            </div>
             @empty
-                <div class="col-12 text-center">
-                    <p class="text-muted fs-4">لا توجد أخبار حاليًا. تابعنا للمزيد!</p>
-                </div>
+            <div class="text-center w-100">
+                <p class="text-muted fs-4">لا توجد أخبار حاليًا. تابعنا للمزيد!</p>
+            </div>
             @endforelse
         </div>
     </div>
+
+    <style>
+        .news-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
+        .news-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .news-card {
+            width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+        }
+
+        .news-img {
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+        }
+
+        @media (max-width: 1200px) {
+            .news-card {
+                width: 250px;
+            }
+            .news-img {
+                height: 150px;
+            }
+            .card-title {
+                font-size: 1rem;
+            }
+            .card-text, .text-muted {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .news-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .news-card {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .news-card {
+                width: 100%;
+            }
+        }
+    </style>
 </section>
 
+
+<!-- الشركات الهندسية-->
+
+<section class="news-section py-5">
+    <div class="container-fluid">
+        <h2 class="text-center mb-5 fw-bold"><i class="bi bi-newspaper me-2"></i>الشركات الهندسية</h2>
+        <div class="carousel-wrapper position-relative">
+            <button class="carousel-btn left" onclick="moveCarousel(-1)"><i class="bi bi-chevron-right"></i></button>
+            <button class="carousel-btn right" onclick="moveCarousel(1)"><i class="bi bi-chevron-left"></i></button>
+            <div class="carousel-track d-flex">
+                @forelse ($companies as $post)
+                <div class="company-card flex-shrink-0">
+                    <div class="card shadow-lg rounded-4 overflow-hidden">
+                        <div class="image-container" style="height: 250px; overflow: hidden;">
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->name }}" class="w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-3">
+                                <span class="badge bg-primary mb-2">{{ $post->name }}</span>
+                                <h4 class="card-title fw-semibold mb-3" style="font-size: 1.3rem;">{{ Str::limit($post->description, 60) }}</h4>
+                            </div>
+                            <div class="details flex-grow-1">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">المدينة:</span>
+                                    <strong>{{ $post->city }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">البريد:</span>
+                                    <strong>{{ $post->email }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted">سنوات الخبرة:</span>
+                                    <strong>{{ $post->years_experience }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted">التليفون:</span>
+                                    <strong>{{ $post->phone }}</strong>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4 pt-3 border-top">
+                                <a href="{{ url('property/all') }}" class="btn btn-primary px-4 py-2">استكشف كل العقارات</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="text-center w-100">
+                    <p class="text-muted fs-4">لا توجد شركات مسجلة حالياً</p>
+                </div>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .news-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 20px;
+        }
+
+        .company-card {
+            width: 360px;
+            margin: 0 10px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-container img {
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(67, 97, 238, 0.8);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(67, 97, 238, 1);
+        }
+
+        .carousel-btn.left {
+            right: 15px;
+        }
+
+        .carousel-btn.right {
+            left: 15px;
+        }
+
+        @media (max-width: 1200px) {
+            .company-card {
+                width: 320px;
+            }
+            .image-container {
+                height: 220px;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .company-card {
+                width: 280px;
+            }
+            .image-container {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-track {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .company-card {
+                width: 90%;
+                margin: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        let currentIndex = 0;
+        const track = document.querySelector('.carousel-track');
+        const cards = document.querySelectorAll('.company-card');
+        const cardWidth = 360 + 20; // Card width + gap
+
+        function moveCarousel(direction) {
+            if (!cards.length) return;
+
+            const visibleCards = 3;
+            const maxIndex = Math.ceil(cards.length - visibleCards);
+
+            currentIndex += direction;
+
+            if (currentIndex < 0) {
+                currentIndex = 0;
+            } else if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+
+            track.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+        }
+    </script>
+</section>
 <!-- قسم الإحصائيات -->
 <section class="stats-section py-5 bg-primary text-white">
     <div class="container-fluid text-center">
@@ -611,18 +1066,7 @@ iframe {
 </section>
 
 <!-- قسم شركاء النجاح -->
-<section class="partners-section py-5 bg-light">
-    <div class="container-fluid">
-        <h2 class="text-center mb-5 fw-bold">شركاء النجاح</h2>
-        <div class="row g-5 justify-content-center">
-            @for ($i = 1; $i <= 6; $i++)
-                <div class="col-lg-2 col-md-4 col-6">
-                    <img src="{{ asset('images/partners/partner' . $i . '.png') }}" class="img-fluid partner-logo" alt="شريك {{ $i }}">
-                </div>
-            @endfor
-        </div>
-    </div>
-</section>
+
 
 <!-- قسم دعوة للعمل -->
 <section class="cta-section py-5 position-relative" style="background: url('{{ asset('images/cta-bg.jpg') }}') center/cover no-repeat;">
@@ -639,6 +1083,73 @@ iframe {
 @endsection
 
 @section('scripts')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const wrapper = document.querySelector('.carousel-wrapper');
+        const track = document.querySelector('.carousel-track');
+        const prevBtn = document.querySelector('.carousel-btn.left');
+        const nextBtn = document.querySelector('.carousel-btn.right');
+        const cards = document.querySelectorAll('.property-card');
+
+        if (!cards.length) return; // إذا لم توجد عناصر
+
+        let cardWidth = cards[0].offsetWidth + 20; // حساب العرض مع الـ gap
+        let currentPosition = 0;
+        let maxPosition = (cards.length - 1) * cardWidth;
+
+        // تحديث الأبعاد عند تغيير حجم الشاشة
+        window.addEventListener('resize', () => {
+            cardWidth = cards[0].offsetWidth + 20;
+            maxPosition = (cards.length - 1) * cardWidth;
+            updateTrack();
+        });
+
+        // التحديث الرئيسي
+        const updateTrack = () => {
+            track.style.transform = `translateX(-${currentPosition}px)`;
+        };
+
+        // التالي
+        nextBtn.addEventListener('click', () => {
+            currentPosition = Math.min(currentPosition + cardWidth, maxPosition);
+            updateTrack();
+        });
+
+        // السابق
+        prevBtn.addEventListener('click', () => {
+            currentPosition = Math.max(currentPosition - cardWidth, 0);
+            updateTrack();
+        });
+
+        // التمرير التلقائي
+        let autoScroll = setInterval(() => {
+            if (currentPosition >= maxPosition) {
+                currentPosition = 0;
+            } else {
+                currentPosition += cardWidth;
+            }
+            updateTrack();
+        }, 5000);
+
+        // إيقاف التمرير عند الهافر
+        wrapper.addEventListener('mouseenter', () => clearInterval(autoScroll));
+        wrapper.addEventListener('mouseleave', () => {
+            autoScroll = setInterval(() => {
+                if (currentPosition >= maxPosition) {
+                    currentPosition = 0;
+                } else {
+                    currentPosition += cardWidth;
+                }
+                updateTrack();
+            }, 5000);
+        });
+    });
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Counter Animation

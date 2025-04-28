@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Models\MaintenanceRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
@@ -12,7 +15,15 @@ class PropertyController extends Controller
     public function index()
     {
         $properties = Property::all(); // جلب جميع العقارات
-        return view('home', compact('properties'));
+        $companies = DB::table('engineering_companies')->get();
+
+        return view('home', compact('properties', 'companies'));
+    }
+
+    public function all()
+    {
+        $properties = Property::all(); // جلب جميع العقارات
+        return view('properties.all', compact('properties'));
     }
 
     // عرض صفحة إضافة عقار
@@ -28,44 +39,105 @@ class PropertyController extends Controller
     }
 
     // إضافة عقار جديد
-    public function store(Request $request)
-    {
-        // تحقق من البيانات المدخلة عبر تسجيلها في الـ log
-        \Log::info($request->all());
+   // إضافة عقار جديد
+   public function store(Request $request)
+   {
+       try {
+           // التحقق من البيانات
+           $validated = $request->validate([
+               'title' => 'required|string|max:255',
+               'description' => 'required|string',
+               'price' => 'required|numeric|min:0',
+               'location' => 'required|string|max:255',
+               'type' => 'required|in:rent,sale',
+               'images' => 'required|array|min:1',
+               'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096', // تحديد أنواع الصور
+           ], [
+               'title.required' => 'العنوان مطلوب.',
+               'description.required' => 'الوصف مطلوب.',
+               'price.required' => 'السعر مطلوب.',
+               'price.numeric' => 'السعر يجب أن يكون رقمًا.',
+               'location.required' => 'الموقع مطلوب.',
+               'type.required' => 'نوع العقار مطلوب.',
+               'images.required' => 'يجب رفع صورة واحدة على الأقل.',
+               'images.*.image' => 'الملف يجب أن يكون صورة.',
+               'images.*.mimes' => 'الصورة يجب أن تكون بصيغة jpeg، png، jpg، أو gif.',
+               'images.*.max' => 'حجم الصورة يجب ألا يتجاوز 4 ميجا.',
+           ]);
 
-        // تحقق من صحة البيانات
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'location' => 'required|string',
-            'type' => 'required|in:rent,sale',
-            'image' => 'required|image',
-        ]);
+           // رفع الصور
+           $uploadedImages = [];
+           if ($request->hasFile('images')) {
+               foreach ($request->file('images') as $image) {
+                   if ($image->isValid()) {
+                       $path = $image->store('property_images', 'public');
+                       $uploadedImages[] = [
+                           'path' => $path,
+                           'room_type' => $request->input('room_type', 'main'), // إمكانية إضافة نوع الغرفة
+                           'description' => $request->input('image_description', ''), // وصف اختياري
+                       ];
+                   }
+               }
+           }
 
-        // تخزين الصورة
-        $imagePath = $request->file('image')->store('property_images', 'public');
+           // إنشاء العقار
+           $property = new Property([
+               'title' => $validated['title'],
+               'description' => $validated['description'],
+               'price' => $validated['price'],
+               'location' => $validated['location'],
+               'type' => $validated['type'],
+               'images' => json_encode($uploadedImages),
+               'user_id' => Auth::id(),
+           ]);
 
-        // إضافة العقار إلى قاعدة البيانات
-        $property = new Property([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'location' => $request->location,
-            'type' => $request->type,
-            'image' => $imagePath,
-            'user_id' => Auth::id(), // تعيين معرف المستخدم الذي أضاف العقار
-        ]);
+           $property->save();
 
-        // إذا كانت البيانات صحيحة، قم بحفظ العقار
-        $property->save();
+           return redirect()->route('home')->with('success', 'تم إضافة العقار بنجاح! يمكنك الآن عرضه في قائمة العقارات.');
+       } catch (\Exception $e) {
+           return back()->withInput()->with('error', 'حدث خطأ أثناء إضافة العقار: ' . $e->getMessage());
+       }
+   }
 
-        // إعادة التوجيه بعد حفظ العقار
-        return redirect()->route('/resources/views/home.blade.php')->with('success', 'تم إضافة العقار بنجاح');
+// تحديث العقار
+// public function update(Request $request, $id)
+// {
+//     $property = Property::findOrFail($id);
 
-      }
+//     $request->validate([
+//         'title' => 'required|string|max:255',
+//         'description' => 'required|string',
+//         'price' => 'required|numeric',
+//         'address' => 'required|string',
+//         'type' => 'required|in:rent,sale',
+//         'images' => 'nullable|array',
+//         'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+//     ]);
 
+//     $currentImages = json_decode($property->images, true) ?? [];
 
+//     if ($request->hasFile('images')) {
+//         foreach ($request->file('images') as $image) {
+//             $path = $image->store('property_images', 'public');
+//             $currentImages[] = [
+//                 'path' => $path,
+//                 'room_type' => 'main',
+//                 'description' => ''
+//             ];
+//         }
+//     }
+
+//     $property->update([
+//         'title' => $request->title,
+//         'description' => $request->description,
+//         'price' => $request->price,
+//         'address' => $request->address,
+//         'type' => $request->type,
+//         'images' => json_encode($currentImages)
+//     ]);
+
+//     return redirect()->route('property.show', $property->id);
+// }
     // عرض تفاصيل العقار
     public function show($id)
     {
@@ -121,12 +193,25 @@ class PropertyController extends Controller
     // البحث عن العقارات
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        $properties = Property::where('title', 'like', "%$query%")
-                               ->orWhere('description', 'like', "%$query%")
-                               ->get();
+        $type = $request->input('type', '');
+        $location = $request->input('location', '');
+
+        $properties = Property::when($type, function ($query) use ($type) {
+                return $query->where('type', $type);
+            })
+            ->when($location, function ($query) use ($location) {
+                return $query->where(function ($query) use ($location) {
+                    $query->where('city', 'like', "%$location%")
+                          ->orWhere('neighborhood', 'like', "%$location%");
+                });
+            })
+            ->where('status', 'available')
+            ->get();
+
         return view('property.search', compact('properties'));
     }
+
+
 
     // عرض صفحة الشركات الموثوقة
     public function companies()
@@ -154,16 +239,75 @@ class PropertyController extends Controller
     }
 
     // عرض صفحة طلب صيانة
-    public function maintenanceRequest($id)
-    {
-        $property = Property::findOrFail($id);
-        return view('property.maintenance', compact('property'));
-    }
+    // public function maintenanceRequest($id)
+    // {
+    //     $property = Property::findOrFail($id);
+    //     return view('property.maintenance', compact('property'));
+    // }
 
-    // إرسال طلب صيانة
-    public function sendMaintenanceRequest(Request $request, $id)
-    {
-        // منطق إرسال طلب الصيانة
-        return back()->with('message', 'تم إرسال طلب الصيانة.');
-    }
+    // // إرسال طلب صيانة
+    // public function sendMaintenanceRequest(Request $request, $id)
+    // {
+    //     // منطق إرسال طلب الصيانة
+    //     return back()->with('message', 'تم إرسال طلب الصيانة.');
+    // }
+
+    // public function createMaintenanceRequest()
+    // {
+
+    //     $properties = Property::where('user_id', auth()->id())->get(); // عرض العقارات الخاصة بالمستخدم
+    //     return view('maintenance_request.create', compact('properties')); }
+
+    // public function storeMaintenanceRequest(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'property_id' => 'required|exists:properties,id',
+    //         'issue_type' => 'required|in:plumbing,electrical,structural,other',
+    //         'description' => 'required|string|max:1000',
+    //         'priority' => 'required|in:urgent,normal',
+    //         'images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // الصور
+    //         'images.*.caption' => 'nullable|string|max:255', // وصف الصور
+    //     ]);
+
+    //     $images = [];
+    //     if ($request->has('images')) {
+    //         foreach ($request->images as $key => $image) {
+    //             if (isset($image['file'])) {
+    //                 // حفظ الصورة في مجلد public/MaintenancePhotos
+    //                 $path = $image['file']->store('MaintenancePhotos', 'public');
+    //                 $images[] = [
+    //                     'path' => $path,
+    //                     'caption' => $image['caption'] ?? null,
+    //                 ];
+    //             }
+    //         }
+    //     }
+
+    //     // إنشاء طلب الصيانة
+    //     MaintenanceRequest::create([
+    //         'user_id' => auth()->id(),
+    //         'property_id' => $validated['property_id'],
+    //         'issue_type' => $validated['issue_type'],
+    //         'description' => $validated['description'],
+    //         'priority' => $validated['priority'],
+    //         'images' => $images ? json_encode($images) : null,
+    //     ]);
+
+    //     return redirect()->route('maintenance_requests.index')->with('success', 'تم إرسال طلب الصيانة بنجاح!');
+    // }
+    // public function showMaintenanceRequest(Request $request)
+    // {
+    //     // استرجاع أول سجل باستخدام DB
+    //     $maintenanceRequest = DB::table('maintenance_requests')->first();
+
+    //     // التحقق من أن البيانات موجودة
+    //     if (!$maintenanceRequest) {
+    //         return redirect()->back()->with('error', 'لا يوجد طلب صيانة');
+    //     }
+
+    //     return view('maintenance_request.index', compact('maintenanceRequest'));
+    // }
+
+
 }
+

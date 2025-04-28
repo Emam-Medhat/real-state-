@@ -165,11 +165,11 @@ h3 {
             <!-- مساعد الليدر -->
             <div class="col-lg-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card leader-card">
-                    <img src="{{ asset('images/team2.jpg') }}" class="card-img-top leader-img" alt="إيهاب">
+                    <img src="{{ asset('images/ايهاب.jpg') }}" class="card-img-top leader-img" alt="إيهاب">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">إيهاب</h4>
                         <h6 class="text-muted mb-3"> قائد الفريق</h6>
-                        <p class="card-text">إيهاب خبير في تحليل وتصميم الأنظمة، يساهم في بناء حلول تقنية مبتكرة تدعم أهداف الفريق.</p>
+                        <p class="card-text">متخصص في تحليل احتياجات الأعمال وتصميم نظم تقنية تلبي متطلبات المستخدمين</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -217,11 +217,11 @@ h3 {
             <!-- عضو 3 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team5.jpg') }}" class="card-img-top team-img" alt="ياسر">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="ياسر">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">ابراهيم</h4>
-                        <h6 class="text-muted mb-3">مختبر جودة</h6>
-                        <p class="card-text">ياسر يضمن جودة المنتجات الرقمية من خلال اختبارات دقيقة وشاملة.</p>
+                        <h6 class="text-muted mb-3">مصمم واجهات</h6>
+                        <p class="card-text">مصمم UI/UX يركز على إنشاء واجهات استخدام جذابة وسهلة، وتحسين تجربة المستخدم</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -233,11 +233,11 @@ h3 {
             <!-- عضو 4 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team6.jpg') }}" class="card-img-top team-img" alt="نور">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="نور">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">السيد</h4>
-                        <h6 class="text-muted mb-3">مصممة تجربة مستخدم</h6>
-                        <p class="card-text">نور تصمم تجارب مستخدم مبتكرة تركز على سهولة الاستخدام والجاذبية.</p>
+                        <h6 class="text-muted mb-3">تحليل وتصميم</h6>
+                        <p class="card-text">متخصص في تحليل احتياجات الأعمال وتصميم نظم تقنية تلبي متطلبات المستخدمين</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -253,11 +253,11 @@ h3 {
             <!-- عضو 5 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team7.jpg') }}" class="card-img-top team-img" alt="خالد">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="خالد">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">رنا</h4>
                         <h6 class="text-muted mb-3">مطور خلفي</h6>
-                        <p class="card-text">خالد يبني أنظمة خلفية قوية تضمن أداءً عاليًا وأمانًا للتطبيقات.</p>
+                        <p class="card-text">مطور خلفية متخصص في بناء قواعد البيانات، تطوير واجهات برمجية</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -269,11 +269,11 @@ h3 {
             <!-- عضو 6 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team8.jpg') }}" class="card-img-top team-img" alt="ريم">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="ريم">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">هنا</h4>
-                        <h6 class="text-muted mb-3">مديرة تسويق</h6>
-                        <p class="card-text">ريم تقود حملات تسويقية إبداعية لتعزيز حضور العلامة التجارية.</p>
+                        <h6 class="text-muted mb-3">مطور امامي</h6>
+                        <p class="card-text">مطور واجهات أمامية متخصص في تصميم وتطوير مواقع عصرية ومتجاوبة</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -285,11 +285,11 @@ h3 {
             <!-- عضو 7 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team9.jpg') }}" class="card-img-top team-img" alt="عمر">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="عمر">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">هانم</h4>
-                        <h6 class="text-muted mb-3">محلل بيانات</h6>
-                        <p class="card-text">عمر يحلل البيانات لتقديم رؤى تدعم اتخاذ القرارات الاستراتيجية.</p>
+                        <h6 class="text-muted mb-3">مصمم واجهات</h6>
+                        <p class="card-text">مصمم UI/UX يركز على إنشاء واجهات استخدام جذابة وسهلة، وتحسين تجربة المستخدم</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -301,11 +301,11 @@ h3 {
             <!-- عضو 8 -->
             <div class="col-lg-3 col-md-6">
                 <div class="card shadow-lg rounded-4 overflow-hidden team-card">
-                    <img src="{{ asset('images/team10.jpg') }}" class="card-img-top team-img" alt="ليلى">
+                    <img src="{{ asset('images/download (3).jpeg') }}" class="card-img-top team-img" alt="ليلى">
                     <div class="card-body p-4 text-center">
                         <h4 class="card-title fw-semibold mb-2">ايه</h4>
-                        <h6 class="text-muted mb-3">مديرة مشاريع</h6>
-                        <p class="card-text">ليلى تنسق المشاريع لضمان التسليم في الوقت المحدد بأعلى جودة.</p>
+                        <h6 class="text-muted mb-3">تحليل وتصميم</h6>
+                        <p class="card-text">متخصص في تحليل احتياجات الأعمال وتصميم نظم تقنية تلبي متطلبات المستخدمين</p>
                         <div class="social-links d-flex gap-2 justify-content-center">
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-linkedin"></i></a>
                             <a href="#" class="btn btn-outline-primary rounded-circle"><i class="bi bi-twitter"></i></a>
@@ -353,7 +353,7 @@ h3 {
                                 <div class="card-body text-center">
                                     <i class="bi bi-quote fs-2 text-primary mb-3"></i>
                                     <p class="card-text">"فريق رائع! ساعدوني في إيجاد شقة أحلامي في وقت قياسي."</p>
-                                    <h6 class="fw-medium mt-3">خالد عبدالله</h6>
+                                    <h6 class="fw-medium mt-3">امام مدحت</h6>
                                     <p class="text-muted">عميل</p>
                                 </div>
                             </div>
@@ -363,7 +363,7 @@ h3 {
                                 <div class="card-body text-center">
                                     <i class="bi bi-quote fs-2 text-primary mb-3"></i>
                                     <p class="card-text">"الاستشارات التقنية من إمام كانت دقيقة ومفيدة جدًا."</p>
-                                    <h6 class="fw-medium mt-3">ليلى سمير</h6>
+                                    <h6 class="fw-medium mt-3"> ابهاب طه</h6>
                                     <p class="text-muted">مستثمرة</p>
                                 </div>
                             </div>
@@ -373,7 +373,7 @@ h3 {
                                 <div class="card-body text-center">
                                     <i class="bi bi-quote fs-2 text-primary mb-3"></i>
                                     <p class="card-text">"تجربة مميزة مع الفريق، كانوا متفهمين لاحتياجاتي."</p>
-                                    <h6 class="fw-medium mt-3">يوسف محمود</h6>
+                                    <h6 class="fw-medium mt-3"> السيد محمود</h6>
                                     <p class="text-muted">عميل</p>
                                 </div>
                             </div>

@@ -39,28 +39,12 @@ class CompanyController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Company::query();
 
-        if ($request->filled('service')) {
-            $query->where('services', 'like', '%' . $request->service . '%');
-        }
-
-        if ($request->filled('location')) {
-            $query->where('location', $request->location);
-        }
-
-        if ($request->filled('rating')) {
-            $query->where('rating', '>=', $request->rating);
-        }
-
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        $companies = $query->paginate(9);
-
-        return view('company.index', compact('companies'));
+        $companies = Company::all();
+        return response()->json($companies);
+        
     }
+    
 
 
 
@@ -68,5 +52,5 @@ class CompanyController extends Controller
     // {
     //     $companies = Company::paginate(9);
     //     return view('company.index', compact('companies'));
-    // }
+
 }
