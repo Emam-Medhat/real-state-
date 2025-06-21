@@ -194,21 +194,18 @@ class PropertyController extends Controller
     public function search(Request $request)
     {
         $type = $request->input('type', '');
-        $location = $request->input('location', '');
+        $city = $request->input('city', '');
 
         $properties = Property::when($type, function ($query) use ($type) {
                 return $query->where('type', $type);
             })
-            ->when($location, function ($query) use ($location) {
-                return $query->where(function ($query) use ($location) {
-                    $query->where('city', 'like', "%$location%")
-                          ->orWhere('neighborhood', 'like', "%$location%");
-                });
+            ->when($city, function ($query) use ($city) {
+                return $query->where('city', 'like', "%$city%");
             })
             ->where('status', 'available')
             ->get();
 
-        return view('property.search', compact('properties'));
+        return view('home', compact('properties'));
     }
 
 
@@ -267,7 +264,7 @@ class PropertyController extends Controller
     //         'priority' => 'required|in:urgent,normal',
     //         'images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // الصور
     //         'images.*.caption' => 'nullable|string|max:255', // وصف الصور
-    //     ]);
+    //     ];
 
     //     $images = [];
     //     if ($request->has('images')) {

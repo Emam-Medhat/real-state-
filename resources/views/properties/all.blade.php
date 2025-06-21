@@ -74,7 +74,7 @@
                                 </a>
                                 <a href="{{ url('contact') }}"
                                    class="btn btn-primary btn-sm px-3 rounded-pill">
-                                   <i class="fas fa-phone-alt me-1"></i>
+                                   <i class="fas fa-phone-alt me-1">الدعم الفني</i>
                                 </a>
                             </div>
                         </div>

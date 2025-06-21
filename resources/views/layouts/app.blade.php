@@ -44,6 +44,8 @@
 
         /* تنسيق اللوجو */
         .header-logo {
+            text-align: center;
+
             color: #fff;
             font-size: 2.2rem;
             font-weight: 700;
@@ -62,7 +64,7 @@
         /* تنسيق النافبار */
         .header-nav {
             position: relative;
-            left: 10%;
+            /* left: 10%; */
             display: flex;
             align-items: center;
             gap: 2.5rem;
@@ -243,7 +245,7 @@
     <!-- Header -->
     <header class="header-main">
         <div class="header-container d-flex justify-content-between align-items-center">
-            <a href="{{ route('home') }}" class="header-logo">🏠 عقارك </a>
+            <a href="{{ route('home') }}" class="header-logo" >🏠 عقارك </a>
             <div class="menu-toggle">☰</div>
             <nav class="header-nav">
                 <a href="{{ route('home') }}">الرئيسية</a>
@@ -259,9 +261,9 @@
                 <a href="{{ url('team') }}"> فريق العمل </a>
 
                 @guest
-                    <a href="{{ route('login') }}" class="btn-login">تسجيل الدخول</a>
+                    <a href="{{ route('login') }}" class="btn-login" style="    text-align: center;">تسجيل الدخول</a>
                 @else
-                    <a href="{{ route('profile.show') }}" class="btn-login">ملفي الشخصي</a>
+                    <a href="{{ route('profile.show') }}" class="btn-login" style="    text-align: center;">ملفي الشخصي</a>
                 @endguest
             </nav>
         </div>

@@ -1,3 +1,9 @@
+@extends('layouts.app')
+
+@section('title', ' تسجيل الدخول')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -10,6 +16,7 @@
 </head>
 
 <body>
+    <br><br><br>
     <div class="login-container">
         <h2>تسجيل الدخول إلى منصة العقارات</h2>
 
@@ -20,24 +27,24 @@
             <!-- Email Field -->
             <div class="input-group">
                 <label for="email">البريد الإلكتروني</label>
-                <input 
-                    type="email" 
-                    name="email" 
-                    id="email" 
-                    placeholder="أدخل بريدك الإلكتروني" 
-                    required 
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="أدخل بريدك الإلكتروني"
+                    required
                 >
             </div>
 
             <!-- Password Field -->
             <div class="input-group">
                 <label for="password">كلمة المرور</label>
-                <input 
-                    type="password" 
-                    name="password" 
-                    id="password" 
-                    placeholder="أدخل كلمة المرور" 
-                    required 
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="أدخل كلمة المرور"
+                    required
                 >
             </div>
 
@@ -60,3 +67,5 @@
     </footer>
 </body>
 </html>
+
+@endsection

@@ -45,6 +45,55 @@ class CompanyController extends Controller
         
     }
     
+    
+    public function filter(Request $request)
+    {
+        $query = Company::query();
+
+        // فلتر البحث بالاسم
+        if ($search = $request->input('search')) {
+            $query->where('name', 'LIKE', "%{$search}%")
+                  ->orWhereHas('specializations', function ($q) use ($search) {
+                      $q->where('name', 'LIKE', "%{$search}%");
+                  });
+        }
+
+        // فلتر المدينة
+        if ($city = $request->input('city') && $city !== 'جميع المدن') {
+            $query->where('city', 'LIKE', "%{$city}%");
+        }
+
+        // فلتر التخصصات
+        if ($specializations = $request->input('specializations')) {
+            $query->whereHas('specializations', function ($q) use ($specializations) {
+                $q->whereIn('name', $specializations);
+            });
+        }
+
+        // فلتر سنوات الخبرة
+        if ($experience = $request->input('experience')) {
+            $query->where('years_experience', '>=', $experience);
+        }
+
+        // فلتر التقييم
+        if ($ratings = $request->input('ratings')) {
+            $query->whereIn('rating', $ratings);
+        }
+
+        $companies = $query->get();
+
+        // إنشاء HTML للشركات
+        $html = '';
+        foreach ($companies as $company) {
+            $html .= view('company.company-card', compact('company'))->render();
+        }
+
+        return response()->json([
+            'html' => $html,
+            'total' => Company::count(),
+            'visible' => $companies->count(),
+        ]);
+    }
 
 
 

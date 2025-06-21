@@ -399,11 +399,11 @@
                 <i class="fas fa-phone-alt"></i> تواصل مع المالك
             </button>
             <a href="{{ url('maintenance_requests/create') }}" class="btn btn-danger"><i class="fas fa-tools me-2"></i> طلب صيانة</a>
-            <button class="cta-button" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
-                {{-- <a href="{{ route('property.booking', $property->id) }}" class="btn btn-primary">
+            {{-- <button class="cta-button" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                <a href="{{ route('property.booking', $property->id) }}" class="btn btn-primary">
                     <i class="fas fa-calendar-check"></i> حجز زيارة
-                </a> --}}
-            </button>
+                </a>
+            </button> --}}
         </div>
     </div>
 </section>

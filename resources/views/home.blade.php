@@ -553,7 +553,10 @@
     <div class="carousel-caption">
         <h1 class="display-2 fw-bold animate__animated animate__fadeInDown">مرحبًا بك في عالم العقارات الفاخرة</h1>
         <p class="lead mb-4 animate__animated animate__fadeInUp">ابحث عن منزل أحلامك أو استثمر في أفضل الفرص العقارية</p>
-        {{-- <form action="{{ route('property.search') }}" method="GET">
+        <section class="search-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">ابحث عن عقارك</h2>
+        <form action="" method="GET" class="search-form">
             <div class="row g-3">
                 <div class="col-md-4">
                     <select name="type" class="form-select" required>
@@ -563,13 +566,37 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <input type="text" name="location" class="form-control" placeholder="المدينة أو الحي" required>
+                    <input type="text" name="city" class="form-control" placeholder="المدينة" required>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary w-100">ابحث الآن</button>
+                    <button type="submit" class="btn btn-primary w-100">بحث</button>
                 </div>
             </div>
-        </form> --}}
+        </form>
+    </div>
+</section>
+        <!-- <section class="search-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">ابحث عن عقارك</h2>
+        <form action="{{ route('property.search') }}" method="GET" class="search-form">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select name="type" class="form-select" required>
+                        <option value="">نوع العقار</option>
+                        <option value="rent">إيجار</option>
+                        <option value="sale">بيع</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="city" class="form-control" placeholder="المدينة" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">بحث</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section> -->
     </div>
 </section>
 
@@ -585,9 +612,7 @@
         </h2>
 
         <div class="carousel-wrapper position-relative">
-            <button class="carousel-btn left" onclick="moveCarousel(-1)"><i class="bi bi-chevron-right"></i></button>
-            <button class="carousel-btn right" onclick="moveCarousel(1)"><i class="bi bi-chevron-left"></i></button>
-
+          
             <div class="carousel-track d-flex">
                 @forelse ($properties as $property)
                 <div class="property-card flex-shrink-0">
@@ -624,7 +649,7 @@
         }
 
         .property-card {
-            width: 300px;
+            width: 316px;
             margin: 0 10px;
             background: white;
             border-radius: 12px;
@@ -841,158 +866,359 @@
 
 <section class="news-section py-5">
     <div class="container-fluid">
-        <h2 class="text-center mb-5 fw-bold"><i class="bi bi-newspaper me-2"></i>الشركات الهندسية</h2>
+        <h2 class="text-center mb-5 fw-bold text-dark">
+            <i class="bi bi-building me-2"></i> الشركات الهندسية
+        </h2>
         <div class="carousel-wrapper position-relative">
-            <button class="carousel-btn left" onclick="moveCarousel(-1)"><i class="bi bi-chevron-right"></i></button>
-            <button class="carousel-btn right" onclick="moveCarousel(1)"><i class="bi bi-chevron-left"></i></button>
+            <!-- Carousel Buttons -->
+            <!-- <button class="carousel-btn left" onclick="moveCarousel(-1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+            <button class="carousel-btn right" onclick="moveCarousel(1)">
+                <i class="bi bi-chevron-left"></i>
+            </button> -->
+            <!-- Carousel Track -->
             <div class="carousel-track d-flex">
                 @forelse ($companies as $post)
-                <div class="company-card flex-shrink-0">
-                    <div class="card shadow-lg rounded-4 overflow-hidden">
-                        <div class="image-container" style="height: 250px; overflow: hidden;">
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->name }}" class="w-100 h-100 object-fit-cover">
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column">
-                            <div class="mb-3">
-                                <span class="badge bg-primary mb-2">{{ $post->name }}</span>
-                                <h4 class="card-title fw-semibold mb-3" style="font-size: 1.3rem;">{{ Str::limit($post->description, 60) }}</h4>
+                    <div class="company-card flex-shrink-0">
+                        <div class="card shadow-lg rounded-4 overflow-hidden">
+                            <div class="image-container position-relative">
+                                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->name }}" class="w-100 h-100 object-fit-cover">
+                                <span class="badge bg-primary position-absolute top-0 start-0 m-3 rounded-pill">
+                                    {{ $post->name }}
+                                </span>
                             </div>
-                            <div class="details flex-grow-1">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">المدينة:</span>
-                                    <strong>{{ $post->city }}</strong>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h4 class="card-title fw-semibold mb-3">
+                                    {{ Str::limit($post->description, 60) }}
+                                </h4>
+                                <div class="details flex-grow-1">
+                                    <div class="detail-item d-flex justify-content-between mb-3">
+                                        <span class="text-muted"><i class="bi bi-geo-alt me-1"></i> المدينة:</span>
+                                        <strong>{{ $post->city }}</strong>
+                                    </div>
+                                    <div class="detail-item d-flex justify-content-between mb-3">
+                                        <span class="text-muted"><i class="bi bi-envelope me-1"></i> البريد:</span>
+                                        <strong>{{ $post->email }}</strong>
+                                    </div>
+                                    <div class="detail-item d-flex justify-content-between mb-3">
+                                        <span class="text-muted"><i class="bi bi-clock me-1"></i> سنوات الخبرة:</span>
+                                        <strong>{{ $post->years_experience }}</strong>
+                                    </div>
+                                    <div class="detail-item d-flex justify-content-between">
+                                        <span class="text-muted"><i class="bi bi-telephone me-1"></i> التليفون:</span>
+                                        <strong>{{ $post->phone }}</strong>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">البريد:</span>
-                                    <strong>{{ $post->email }}</strong>
+                                <div class="text-center mt-4 pt-3 border-top">
+                                    <a href="{{ url('property/all') }}" class="btn btn-primary px-4 py-2 rounded-pill">
+                                        <i class="bi bi-arrow-left me-2"></i> استكشف كل العقارات
+                                    </a>
                                 </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">سنوات الخبرة:</span>
-                                    <strong>{{ $post->years_experience }}</strong>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <span class="text-muted">التليفون:</span>
-                                    <strong>{{ $post->phone }}</strong>
-                                </div>
-                            </div>
-                            <div class="text-center mt-4 pt-3 border-top">
-                                <a href="{{ url('property/all') }}" class="btn btn-primary px-4 py-2">استكشف كل العقارات</a>
                             </div>
                         </div>
                     </div>
-                </div>
                 @empty
-                <div class="text-center w-100">
-                    <p class="text-muted fs-4">لا توجد شركات مسجلة حالياً</p>
-                </div>
+                    <div class="text-center w-100 py-5">
+                        <i class="bi bi-building fs-1 text-muted mb-3"></i>
+                        <p class="text-muted fs-4">لا توجد شركات مسجلة حاليًا</p>
+                    </div>
                 @endforelse
+            </div>
+            <!-- Carousel Dots -->
+            <div class="carousel-dots text-center mt-4">
+                @foreach ($companies as $index => $post)
+                    <span class="dot {{ $index == 0 ? 'active' : '' }}" onclick="goToSlide({{ $index }})"></span>
+                @endforeach
             </div>
         </div>
     </div>
+</section>
 
-    <style>
-        .news-section {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-        }
 
-        .carousel-wrapper {
-            position: relative;
-            overflow: hidden;
-        }
+<style>
+    :root {
+        --primary-color: #22C55E;
+        --primary-dark: #16A34A;
+        --secondary-color: #3B82F6;
+        --dark-color: #1F2937;
+        --light-color: #F9FAFB;
+        --gray-color: #6B7280;
+        --light-gray: #E5E7EB;
+        --danger-color: #EF4444;
+        --warning-color: #F59E0B;
+    }
 
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            gap: 20px;
-        }
+    .news-section {
+        background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+        padding: 4rem 0;
+        font-family: 'Cairo', sans-serif;
+    }
 
+    .news-section h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--dark-color);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        position: relative;
+        display: inline-block;
+    }
+
+    .news-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 4px;
+        background: var(--primary-color);
+        border-radius: 2px;
+    }
+
+    .carousel-wrapper {
+        position: relative;
+        overflow: hidden;
+        max-width: 93%;
+    }
+
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .company-card {
+        width: 338px;
+        flex: 0 0 auto;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .company-card:hover {
+        transform: translateY(-8px);
+        opacity: 0.95;
+    }
+
+    .card {
+        background: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .image-container {
+        height: 260px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-container img {
+        border-radius: 1.5rem 1.5rem 0 0;
+        transition: transform 0.5s ease;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .company-card:hover .image-container img {
+        transform: scale(1.05);
+    }
+
+    .badge {
+        font-size: 0.9rem;
+        font-weight: 700;
+        padding: 0.5rem 1rem;
+        background: var(--primary-color);
+        color: white;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .badge:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .detail-item {
+        font-size: 0.95rem;
+        color: var(--gray-color);
+        transition: color 0.3s ease;
+    }
+
+    .detail-item:hover {
+        color: var(--primary-color);
+    }
+
+    .detail-item strong {
+        color: var(--dark-color);
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: var(--primary-color);
+        border: none;
+        font-weight: 700;
+        padding: 0.7rem 1.5rem;
+        border-radius: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .carousel-btn:hover {
+        background: var(--primary-color);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-btn.left {
+        right: -25px;
+    }
+
+    .carousel-btn.right {
+        left: -25px;
+    }
+
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .dot {
+        width: 12px;
+        height: 12px;
+        background: var(--light-gray);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .dot.active {
+        background: var(--primary-color);
+        transform: scale(1.2);
+    }
+
+    .dot:hover {
+        background: var(--primary-dark);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
         .company-card {
-            width: 360px;
-            margin: 0 10px;
+            width: 340px;
         }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.1);
-            transition: transform 0.3s ease;
+        .image-container {
+            height: 240px;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
+        .card-title {
+            font-size: 1.3rem;
         }
+    }
 
-        .image-container img {
-            border-top-right-radius: 12px;
-            border-top-left-radius: 12px;
+    @media (max-width: 992px) {
+        .company-card {
+            width: 300px;
         }
-
-        .card-body {
-            padding: 20px;
+        .image-container {
+            height: 220px;
         }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(67, 97, 238, 0.8);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: background 0.3s ease;
-        }
-
-        .carousel-btn:hover {
-            background: rgba(67, 97, 238, 1);
-        }
-
         .carousel-btn.left {
-            right: 15px;
+            right: -15px;
         }
-
         .carousel-btn.right {
-            left: 15px;
+            left: -15px;
         }
+    }
 
-        @media (max-width: 1200px) {
-            .company-card {
-                width: 320px;
-            }
-            .image-container {
-                height: 220px;
-            }
-            .card-title {
-                font-size: 1.2rem;
-            }
+    @media (max-width: 768px) {
+        .carousel-track {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
         }
+        .company-card {
+            width: 90%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+        }
+        .carousel-btn.left {
+            right: 10px;
+        }
+        .carousel-btn.right {
+            left: 10px;
+        }
+        .news-section h2 {
+            font-size: 2rem;
+        }
+    }
 
-        @media (max-width: 992px) {
-            .company-card {
-                width: 280px;
-            }
-            .image-container {
-                height: 200px;
-            }
+    @media (max-width: 576px) {
+        .company-card {
+            width: 100%;
+            max-width: 280px;
         }
-
-        @media (max-width: 768px) {
-            .carousel-track {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .company-card {
-                width: 90%;
-                margin: 10px;
-            }
+        .image-container {
+            height: 200px;
         }
-    </style>
+        .card-title {
+            font-size: 1.2rem;
+        }
+        .detail-item {
+            font-size: 0.85rem;
+        }
+        .carousel-dots {
+            gap: 0.3rem;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+        }
+    }
+</style>
 
     <script>
         let currentIndex = 0;
@@ -1076,7 +1302,7 @@
         <p class="lead mb-4 text-white">ابدأ رحلتك العقارية مع أفضل منصة في مصر</p>
         <div class="d-flex justify-content-center gap-3">
             <a href="{{ url('contact') }}" class="btn btn-primary btn-lg">تواصل معنا</a>
-            <a href="{{ route('property.store') }}" class="btn btn-outline-light btn-lg">ابحث عن عقار</a>
+            <a href="#" class="btn btn-outline-light btn-lg">ابحث عن عقار</a>
         </div>
     </div>
 </section>
@@ -1185,5 +1411,60 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+</script>
+<script>
+    let currentSlide = 0;
+    const track = document.querySelector('.carousel-track');
+    const cards = document.querySelectorAll('.company-card');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    const cardWidth = cards.length > 0 ? cards[0].offsetWidth + 24 : 0; // Including gap
+    const totalSlides = cards.length;
+
+    function updateCarousel() {
+        if (totalSlides === 0) return;
+        track.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+
+    function moveCarousel(direction) {
+        if (totalSlides === 0) return;
+        currentSlide += direction;
+        if (currentSlide < 0) {
+            currentSlide = totalSlides - 1;
+        } else if (currentSlide >= totalSlides) {
+            currentSlide = 0;
+        }
+        updateCarousel();
+    }
+
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+    }
+
+    // Auto-scroll every 5 seconds
+    let autoScroll = setInterval(() => moveCarousel(1), 5000);
+
+    // Pause auto-scroll on hover
+    document.querySelector('.carousel-wrapper').addEventListener('mouseenter', () => {
+        clearInterval(autoScroll);
+    });
+
+    document.querySelector('.carousel-wrapper').addEventListener('mouseleave', () => {
+        autoScroll = setInterval(() => moveCarousel(1), 5000);
+    });
+
+    // Initialize carousel
+    updateCarousel();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (cards.length > 0) {
+            const newCardWidth = cards[0].offsetWidth + 24;
+            track.style.transform = `translateX(-${currentSlide * newCardWidth}px)`;
+        }
+    });
 </script>
 @endsection

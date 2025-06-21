@@ -71,6 +71,8 @@ Route::get('/companies', [CompanyController::class, 'index'])->name('companies.i
 Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
 Route::get('/company', [CompanyController::class, 'index'])->name('company.index');
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
@@ -104,11 +106,17 @@ Route::get('engineering-companies', function () {
 
 Route::get('/engineering-companies', [App\Http\Controllers\EngineeringCompaniesController::class, 'index'])->name('engineering_companies.index');
 Route::get('/engineering-companies/create', [App\Http\Controllers\EngineeringCompaniesController::class, 'create'])->name('engineering_companies.create')->middleware('auth');
-Route::post('/engineering-companies', [App\Http\Controllers\EngineeringCompaniesController::class, 'insert'])->name('engineering_companies.store');
-Route::get('/engineering-companies/{company}', [App\Http\Controllers\EngineeringCompaniesController::class, 'show'])->name('engineering_companies.show');
+Route::post('/engineering-companies', [App\Http\Controllers\EngineeringCompaniesController::class, 'insert'])->name('engineering_companies.insert');
+Route::get('/engineering-companies/{id}', [App\Http\Controllers\EngineeringCompaniesController::class, 'show'])->name('engineering_companies.show');
+Route::get('/engineering-companies/{id}/edit', [App\Http\Controllers\EngineeringCompaniesController::class, 'edit'])->name('engineering_companies.edit');
+Route::put('/engineering-companies/{id}', [App\Http\Controllers\EngineeringCompaniesController::class, 'update'])->name('engineering_companies.update');
+Route::delete('/engineering-companies/{id}', [App\Http\Controllers\EngineeringCompaniesController::class, 'destroy'])->name('engineering_companies.destroy');
+Route::post('/engineering-companies/filter', [App\Http\Controllers\EngineeringCompaniesController::class, 'filter'])->name('engineering_companies.filter');
+Route::get('/engineering-companies/search', [App\Http\Controllers\EngineeringCompaniesController::class, 'search'])->name('engineering_companies.search');
+// Route::get('/engineering-companies/filter', [EngineeringCompaniesController::class, 'filter'])->name('engineering_companies.filter');
 
 
-
+Route::get('/engineering-companies/filter', [CompanyController::class, 'filter'])->name('engineering_companies.filter');
 
 
 // Route::get('/upload', [ImageController::class, 'uploadForm'])->name('upload.form');

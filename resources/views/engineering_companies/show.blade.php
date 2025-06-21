@@ -836,14 +836,14 @@
             <div class="projects-grid">
                 @forelse ($company->projects ?? [] as $project)
                     <div class="project-card animate-on-scroll">
-                        <img
-                            src="{{ asset('storage/' . ($project['image'] ?? 'default-project.jpg')) }}"
-                            class="project-img"
-                            alt="{{ $project['name'] }}"
-                        >
+                    <img src="{{ $company->image ? asset('storage/' . $company->image) : 'https://via.placeholder.com/300' }}" 
+                             alt="{{ $company->name }}" class="company-image">
+                        <img src="{{ $company->image ? asset('storage/' . $company->image) : 'https://via.placeholder.com/100' }}" 
+                             alt="شعار {{ $company->name }}" class="company-logo">
+                 
                         <div class="project-body">
-                            <h4 class="project-title">{{ $project['name'] }}</h4>
-                            <p class="project-description">{{ $project['description'] ?? 'لا توجد تفاصيل متاحة.' }}</p>
+                            <h4 class="project-title">{{ $company->name }}</h4>
+                            <p class="project-description">{{ $company->description ?? 'لا توجد تفاصيل متاحة.' }}</p>
                         </div>
                     </div>
                 @empty
@@ -862,8 +862,7 @@
                     <li class="certification-item animate-on-scroll">
                         <i class="fas fa-certificate certification-icon"></i>
                         <div>
-                            <h5 class="certification-name">{{ $cert['name'] }}</h5>
-                            <p class="certification-details">{{ $cert['issuer'] }} - {{ $cert['year'] }}</p>
+                            <h5 class="certification-name">{{ $company->name }}</h5>
                         </div>
                     </li>
                 @empty
@@ -883,11 +882,10 @@
                         <img
                             src="{{ asset('storage/' . ($member['image'] ?? 'default-avatar.jpg')) }}"
                             class="team-avatar"
-                            alt="{{ $member['name'] }}"
+                            alt="{{ $company->name }}"
                         >
                         <div class="team-info">
-                            <h5>{{ $member['name'] }}</h5>
-                            <p>{{ $member['position'] }}</p>
+                            <h5>{{ $company->name }}</h5>
                         </div>
                     </div>
                 @empty
