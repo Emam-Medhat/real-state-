@@ -305,6 +305,10 @@ class PropertyController extends Controller
     //     return view('maintenance_request.index', compact('maintenanceRequest'));
     // }
 
+    public function reserve($id) {
+        $property = Property::findOrFail($id);
+        return view('property.reserve', compact('property'));
+    }
 
 }
 

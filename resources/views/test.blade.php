@@ -1,259 +1,164 @@
-<?php
+@extends('layouts.app')
 
-namespace App\Http\Controllers;
+@section('title', '{{ $property->title }} - بيتك')
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
-
-class EngineeringCompaniesController extends Controller
-{
-    public function index()
-    {
-        $companies = DB::table('engineering_companies')->get()->map(function ($company) {
-            $company->services = $company->services ? json_decode($company->services, true) ?? [] : [];
-            return $company;
-        });
-        return view('engineering_companies.index', compact('companies'));
+@section('content')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+    /* دعم النصوص العربية */
+    body {
+        font-family: 'Cairo', sans-serif;
+        direction: rtl;
+        background-color: #f1f3f5;
     }
 
-    public function create()
-    {
-        return view('engineering_companies.create');
+    /* تنسيق الصفحات العام */
+    section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 
-    public function insert(Request $request)
-    {
-        try {
-            DB::beginTransaction();
+    /* تنسيق الحاوية */
+    .container-fluid {
+        max-width: 1400px;
+        padding: 0 15px;
+    }
 
-            $validated = $request->validate([
-                'name' => 'required|string|max:255|min:3|unique:engineering_companies,name|trim',
-                'description' => 'nullable|string|max:1000|trim',
-                'city' => 'required|string|max:100|min:2|trim',
-                'phone' => 'required|string|max:20|min:7|regex:/^[0-9\-\+]+$/|unique:engineering_companies,phone|trim',
-                'email' => 'required|email|max:255|unique:engineering_companies,email|lowercase|trim',
-                'website' => 'nullable|url|max:255|trim|regex:/^(https?):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/.*)?$/',
-                'years_experience' => 'nullable|integer|min:0|max:100',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:min_width=300,min_height=300',
-                'services' => 'nullable|array|min:1',
-                'services.*' => 'string|max:255|trim',
-                'projects' => 'nullable|array|min:1',
-                'projects.*' => 'string|max:255|trim',
-                'certifications' => 'nullable|array|min:1',
-                'certifications.*' => 'string|max:255|trim',
-                'team' => 'nullable|array|min:1',
-                'team.*' => 'string|max:255|trim',
-            ]);
+    /* تنسيق العناوين */
+    h2 {
+        font-size: 2.5rem;
+        color: #1a252f;
+    }
 
-            $imagePath = null;
-            if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-                $imagePath = $request->file('image')->storeAs('CompanyImages', $fileName, 'public');
-            }
+    h3 {
+        font-size: 1.8rem;
+        color: #1a252f;
+    }
 
-            $companyData = [
-                'name' => $validated['name'],
-                'description' => $validated['description'],
-                'city' => $validated['city'],
-                'phone' => preg_replace('/[\s\-]+/', '', $validated['phone']),
-                'email' => $validated['email'],
-                'website' => $validated['website'],
-                'years_experience' => $validated['years_experience'],
-                'image' => $imagePath,
-                'services' => json_encode(array_values($request->input('services', []))),
-                'projects' => json_encode(array_values($request->input('projects', []))),
-                'certifications' => json_encode(array_values($request->input('certifications', []))),
-                'team' => json_encode(array_values($request->input('team', []))),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+    /* تنسيق البطاقات */
+    .card {
+        border: none;
+        border-radius: 1rem;
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-            DB::table('engineering_companies')->insert($companyData);
-            DB::commit();
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
 
-            return redirect()->route('engineering_companies.index')
-                ->with('success', 'تم إنشاء الشركة بنجاح!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error creating engineering company', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'input' => $request->all(),
-            ]);
+    /* تنسيق صورة العقار */
+    .property-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 1rem;
+    }
 
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'حدث خطأ أثناء إنشاء الشركة: ' . $e->getMessage());
+    /* تنسيق الأزرار */
+    .btn-primary {
+        background: linear-gradient(90deg, #007bff, #00aaff);
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #0056b3, #007bff);
+        transform: translateY(-2px);
+    }
+
+    .btn-reserve {
+        background: linear-gradient(90deg, #28a745, #20c997);
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        transition: background 0.3s, transform 0.3s;
+    }
+
+    .btn-reserve:hover {
+        background: linear-gradient(90deg, #218838, #28a745);
+        transform: translateY(-2px);
+    }
+
+    /* استجابية */
+    @media (max-width: 992px) {
+        h2 {
+            font-size: 2rem;
+        }
+        .property-image {
+            height: 300px;
         }
     }
 
-    public function show($id)
-    {
-        $company = DB::table('engineering_companies')->where('id', $id)->first();
-        if (!$company) {
-            return redirect()->route('engineering_companies.index')->with('error', 'الشركة غير موجودة');
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 0 10px;
         }
-
-        $company->services = $company->services ? json_decode($company->services, true) ?? [] : [];
-        $company->projects = $company->projects ? json_decode($company->projects, true) ?? [] : [];
-        $company->certifications = $company->certifications ? json_decode($company->certifications, true) ?? [] : [];
-        $company->team = $company->team ? json_decode($company->team, true) ?? [] : [];
-
-        return view('engineering_companies.show', compact('company'));
-    }
-
-    public function edit($id)
-    {
-        $company = DB::table('engineering_companies')->where('id', $id)->first();
-        if (!$company) {
-            return redirect()->route('engineering_companies.index')->with('error', 'الشركة غير موجودة');
+        h2 {
+            font-size: 1.8rem;
         }
-
-        $company->services = $company->services ? json_decode($company->services, true) ?? [] : [];
-        $company->projects = $company->projects ? json_decode($company->projects, true) ?? [] : [];
-        $company->certifications = $company->certifications ? json_decode($company->certifications, true) ?? [] : [];
-        $company->team = $company->team ? json_decode($company->team, true) ?? [] : [];
-
-        return view('engineering_companies.edit', compact('company'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        try {
-            DB::beginTransaction();
-
-            $validated = $request->validate([
-                'name' => 'required|string|max:255|min:3|unique:engineering_companies,name,' . $id,
-                'description' => 'nullable|string|max:1000|trim',
-                'city' => 'required|string|max:100|min:2|trim',
-                'phone' => 'required|string|max:20|min:7|regex:/^[0-9\-\+]+$/|unique:engineering_companies,phone,' . $id,
-                'email' => 'required|email|max:255|unique:engineering_companies,email,' . $id,
-                'website' => 'nullable|url|max:255|trim|regex:/^(https?):\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/.*)?$/',
-                'years_experience' => 'nullable|integer|min:0|max:100',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:min_width=300,min_height=300',
-                'services' => 'nullable|array',
-                'services.*' => 'string|max:255|trim',
-                'projects' => 'nullable|array',
-                'projects.*' => 'string|max:255|trim',
-                'certifications' => 'nullable|array',
-                'certifications.*' => 'string|max:255|trim',
-                'team' => 'nullable|array',
-                'team.*' => 'string|max:255|trim',
-            ]);
-
-            $company = DB::table('engineering_companies')->where('id', $id)->first();
-            if (!$company) {
-                return redirect()->route('engineering_companies.index')->with('error', 'الشركة غير موجودة');
-            }
-
-            $imagePath = $company->image;
-            if ($request->hasFile('image') && $request->file('image')->isValid()) {
-                if ($imagePath) {
-                    Storage::disk('public')->delete($imagePath);
-                }
-                $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-                $imagePath = $request->file('image')->storeAs('CompanyImages', $fileName, 'public');
-            }
-
-            DB::table('engineering_companies')->where('id', $id)->update([
-                'name' => $validated['name'],
-                'description' => $validated['description'],
-                'city' => $validated['city'],
-                'phone' => preg_replace('/[\s\-]+/', '', $validated['phone']),
-                'email' => $validated['email'],
-                'website' => $validated['website'],
-                'years_experience' => $validated['years_experience'],
-                'image' => $imagePath,
-                'services' => json_encode(array_values($request->input('services', []))),
-                'projects' => json_encode(array_values($request->input('projects', []))),
-                'certifications' => json_encode(array_values($request->input('certifications', []))),
-                'team' => json_encode(array_values($request->input('team', []))),
-                'updated_at' => now(),
-            ]);
-
-            DB::commit();
-            return redirect()->route('engineering_companies.index')->with('success', 'تم تحديث الشركة بنجاح!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error updating engineering company', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'input' => $request->all(),
-            ]);
-
-            return redirect()->back()->with('error', 'حدث خطأ أثناء تحديث الشركة: ' . $e->getMessage());
+        .property-image {
+            height: 250px;
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            $company = DB::table('engineering_companies')->where('id', $id)->first();
-            if (!$company) {
-                return redirect()->route('engineering_companies.index')->with('error', 'الشركة غير موجودة');
-            }
-
-            if ($company->image) {
-                Storage::disk('public')->delete($company->image);
-            }
-
-            DB::table('engineering_companies')->where('id', $id)->delete();
-            return redirect()->route('engineering_companies.index')->with('success', 'تم حذف الشركة بنجاح!');
-        } catch (\Exception $e) {
-            Log::error('Error deleting engineering company', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            return redirect()->route('engineering_companies.index')->with('error', 'حدث خطأ أثناء حذف الشركة');
+    @media (max-width: 576px) {
+        h3 {
+            font-size: 1.3rem;
+        }
+        .property-image {
+            height: 200px;
+        }
+        .btn-primary, .btn-reserve {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
         }
     }
+</style>
 
-    public function filter(Request $request)
-    {
-        $companies = DB::table('engineering_companies')
-            ->when($request->search, function($query, $search) {
-                return $query->where('name', 'like', "%$search%");
-            })
-            ->when($request->experience, function($query, $experience) {
-                return $query->where('years_experience', '>=', $experience);
-            })
-            ->when($request->city, function($query, $city) {
-                return $query->where('city', 'like', "%$city%");
-            })
-            ->get()
-            ->map(function ($company) {
-                $company->services = $company->services ? json_decode($company->services, true) ?? [] : [];
-                return $company;
-            });
+<section class="property-details py-5">
+    <div class="container-fluid">
+        <h2 class="text-center mb-5 fw-bold">{{ $property->title }}</h2>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card shadow-lg rounded-3">
+                    <img src="{{ asset('storage/' . $property->image) }}" alt="{{ $property->title }}" class="property-image">
+                    <div class="card-body p-4">
+                        <h3 class="fw-semibold mb-3">{{ number_format($property->price) }} جنيه</h3>
+                        <p class="text-muted mb-2"><i class="bi bi-geo-alt me-2"></i>{{ $property->city }}</p>
+                        <p class="mb-4">{{ $property->description }}</p>
+                        <div class="d-flex gap-3">
+                            <a href="{{ url('properties') }}" class="btn btn-primary">رجوع للعقارات</a>
+                            <a href="{{ route('property.reserve', $property->id) }}" class="btn btn-reserve">حجز العقار</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-lg rounded-3 p-4">
+                    <h3 class="fw-semibold mb-4">تفاصيل إضافية</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><strong>النوع:</strong> {{ $property->type == 'sale' ? 'بيع' : 'إيجار' }}</li>
+                        <li class="mb-3"><strong>المساحة:</strong> {{ $property->area ?? 'غير محدد' }} م²</li>
+                        <li class="mb-3"><strong>تاريخ الإضافة:</strong> {{ $property->created_at->format('d M Y') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-        $html = view('engineering_companies._companies_list', compact('companies'))->render();
+@endsection
 
-        return response()->json([
-            'html' => $html,
-            'total' => DB::table('engineering_companies')->count(),
-            'visible' => $companies->count(),
-        ]);
-    }
-
-    public function search(Request $request)
-    {
-        $query = DB::table('engineering_companies');
-
-        if ($request->has('city') && $request->city != '') {
-            $query->where('city', 'like', '%' . $request->city . '%');
-        }
-
-        if ($request->has('name') && $request->name != '') {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        $companies = $query->get()->map(function ($company) {
-            $company->services = $company->services ? json_decode($company->services, true) ?? [] : [];
-            return $company;
-        });
-
-        return view('engineering_companies.index', compact('companies'));
-    }
-}
+@section('scripts')
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+@endsection

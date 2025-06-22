@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'تواصل معنا - {{ $company->name }}')
+@section('title', 'تفاصيل الشركة')
 
 @section('content')
-<style>
+<!-- <style>
     :root {
         --primary-color: #1E3A8A; /* Deep Blue */
         --secondary-color: #3B82F6; /* Bright Blue */
@@ -721,6 +721,266 @@
             padding: 2.5rem 1rem;
         }
     }
+</style> -->
+<style>
+    /* تحسين استجابة الصفحة وجمالها، بدون تغيير أي متغير أو إضافة عناصر */
+
+/* كارت الشركة الرئيسي */
+.company-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px 0 rgba(30,58,138,0.08), 0 1.5px 7px 0 #f43f5e11;
+    margin: 2.5rem auto;
+    overflow: hidden;
+    animation: fadeIn 0.8s;
+    border: 1px solid #f1f5f9;
+}
+
+/* الهيدر */
+.company-header {
+    background: linear-gradient(120deg, #1e3a8a 55%, #f43f5e);
+    color: #fff;
+    padding: 3.5rem 1rem 4.5rem;
+    text-align: center;
+    position: relative;
+    border-radius: 0 0 50px 50px;
+    box-shadow: 0 6px 18px #1e3a8a13;
+}
+.company-title {
+    font-size: 2.35rem;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    text-shadow: 0 2px 8px #0002;
+}
+.company-subtitle {
+    font-size: 1.18rem;
+    opacity: .96;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: .5rem;
+    color: #f1f5f9;
+}
+
+@media (max-width: 768px){
+    .company-header { padding: 1.2rem 0.4rem 2.2rem; border-radius: 0 0 24px 24px;}
+    .company-title { font-size: 1.25rem; }
+    .company-subtitle { font-size: 1rem; }
+}
+
+/* الكاروسيل */
+.company-carousel {
+    border-radius: 18px;
+    box-shadow: 0 2px 22px #1e3a8a15;
+    margin: -3.2rem auto 2.2rem;
+    background: #fff;
+    overflow: hidden;
+    max-width: 900px;
+}
+.company-img {
+    width: 100%;
+    height: 370px;
+    object-fit: cover;
+    border-radius: 18px;
+    transition: transform .5s, filter .3s;
+}
+.carousel-item:hover .company-img { transform: scale(1.03); filter: brightness(1.07);}
+.carousel-indicators button {
+    width:10px; height:10px; border-radius:50%;
+    background:#3b82f6; opacity:.38; border:none; margin:0 4px;
+    transition: all .32s;
+}
+.carousel-indicators .active {
+    opacity: 1; background: #f43f5e; transform: scale(1.13);
+}
+.carousel-control-prev, .carousel-control-next {
+    width:38px; height:38px; top:50%; border-radius:50%;
+    background:rgba(30,58,138,.12); opacity:.85;
+    transition:all .23s;
+}
+.carousel-control-prev:hover, .carousel-control-next:hover { background: #f43f5e; color: #fff;}
+
+@media (max-width: 768px) {
+    .company-img { height: 145px; }
+    .company-carousel { margin: -1.9rem auto 1.2rem; }
+}
+
+/* تفاصيل الشركة */
+.company-content { padding: 2.5rem 1rem 1.2rem; max-width:1200px; margin:auto;}
+.company-details {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap: 1.1rem;
+    margin-bottom: 1.8rem;
+}
+.detail-card {
+    background: #fff;
+    border-radius: 17px;
+    box-shadow: 0 2px 18px #1e3a8a0c;
+    padding: 1.2rem 1.1rem;
+    transition: all .27s;
+    border-right: 4px solid #3b82f6;
+    min-height: 135px;
+    overflow: hidden;
+    position: relative;
+}
+.detail-title {
+    font-weight: 700;
+    color: #1e3a8a;
+    font-size: 1.11rem;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.detail-title i { color: #f43f5e; font-size: 1.3rem; }
+.detail-card:hover { box-shadow: 0 8px 36px #f43f5e24; transform:translateY(-4px);}
+.detail-card:hover .detail-title i { color: #3b82f6; }
+.detail-card p, .detail-card a {
+    color: #64748b;
+    font-size: 0.96rem;
+    margin-bottom: 0.2rem;
+}
+.detail-card a { text-decoration: underline dotted; }
+.detail-card a:hover { color: #f43f5e; }
+
+@media (max-width: 768px) {
+    .company-content { padding: 1.3rem 0.3rem 0.7rem; }
+    .company-details { gap: 0.6rem; }
+    .detail-title { font-size: 1rem; }
+    .detail-card { padding: 0.8rem 0.6rem; min-height: 90px;}
+}
+
+/* العناوين الفرعية */
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    margin: 2rem 0 1rem;
+    display: block;
+    position: relative;
+}
+.section-title::after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 4px;
+    margin-right: 8px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #f43f5e, transparent 90%);
+    vertical-align: middle;
+}
+
+/* بادجات الخدمات */
+.badge {
+    background: linear-gradient(90deg, #3b82f6 55%, #f43f5e);
+    color: #fff;
+    padding: 0.5rem 1.1rem;
+    margin: 0 0.45rem 0.6rem 0;
+    border-radius: 22px;
+    font-size: 0.97rem;
+    font-weight: 600;
+    display: inline-flex; align-items: center;
+    box-shadow: 0 1px 6px #2563eb09;
+    transition: all .21s;
+}
+.badge i { margin-left: 0.38rem; font-size: 1rem;}
+.badge:hover { background:#f43f5e; transform: scale(1.07); }
+
+/* المشاريع */
+.projects-grid {
+    display: grid; gap: 1.1rem;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    margin-bottom: 2.2rem;
+}
+.project-card {
+    border-radius: 16px;
+    box-shadow: 0 2px 10px #f43f5e0a, 0 2px 8px #1e3a8a09;
+    background: #fff;
+    transition: all .23s;
+    overflow: hidden;
+    min-height: 120px;
+    display: flex; flex-direction: column;
+}
+.project-img {
+    height: 100px; width: 100%; object-fit: cover;
+    border-radius: 16px 16px 0 0;
+    transition: transform .4s, filter .21s;
+}
+.project-card:hover { box-shadow: 0 10px 30px #f43f5e15; transform:translateY(-4px);}
+.project-card:hover .project-img { filter:brightness(1.09); transform:scale(1.04);}
+.project-body { padding: 0.8rem 1rem;}
+.project-title { font-size: 1.03rem; font-weight: 700; color: #1e3a8a;}
+.project-description { color: #64748b; font-size: 0.98rem; }
+
+@media (max-width: 768px) {
+    .projects-grid { grid-template-columns:1fr; }
+    .project-img { height: 65px; }
+}
+
+/* الشهادات والفريق */
+.certification-list, .team-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    display: grid; gap: 0.9rem;
+}
+.certification-item, .team-member {
+    background: #fff;
+    border-radius: 17px;
+    padding: 1.1rem;
+    box-shadow: 0 2px 10px #3b82f609;
+    display: flex; align-items: center; gap: 1.1rem;
+    transition: all .18s;
+    min-height: 60px;
+}
+.certification-item:hover, .team-member:hover { transform:translateX(4px); box-shadow: 0 8px 26px #f43f5e11;}
+.certification-icon, .team-avatar {
+    font-size: 1.7rem; color: #f43f5e; flex-shrink: 0;
+}
+.team-avatar {
+    width: 38px; height: 38px; border-radius:50%; object-fit:cover;
+    border: 2px solid #eee;
+}
+.certification-name { font-weight: 700; color: #1e3a8a; font-size: 1.05rem;}
+@media(max-width: 576px) {
+    .certification-item, .team-member { padding: 0.7rem; flex-direction: column; gap: 0.5rem;}
+    .team-avatar { width: 28px; height: 28px;}
+}
+
+/* الأزرار */
+.action-buttons { display: flex; gap: 1.2rem; margin-top: 2rem; flex-wrap: wrap;}
+.btn-primary, .btn-outline-primary {
+    border-radius: 38px;
+    font-weight: 700;
+    font-size: 1.01rem;
+    padding: 0.7rem 1.65rem;
+    box-shadow: 0 2px 8px #2563eb12;
+    transition: all .22s;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #f43f5e 55%, #3b82f6);
+    border: none; color: #fff;
+}
+.btn-primary:hover { background: #1e3a8a; color:#fff; transform: translateY(-2px);}
+.btn-outline-primary {
+    border: 2px solid #f43f5e; color: #f43f5e; background: transparent;
+}
+.btn-outline-primary:hover {
+    color: #fff; background: #f43f5e; border-color: #f43f5e;
+}
+.btn i { margin-left: 0.4rem; font-size: 1rem;}
+@media (max-width: 768px){ .action-buttons{flex-direction:column; gap:0.6rem;} .btn{width:100%;} }
+
+/* الرسائل الفارغة */
+.empty-state { text-align:center; background:#fff; padding:1.8rem; border-radius:15px; box-shadow:0 2px 12px #1e3a8a07; margin-bottom:0.7rem;}
+.empty-state i { font-size:2.1rem; color:#64748b; opacity:.7;}
+.empty-state h4 { color:#1e3a8a; margin:0.4rem 0;}
+
+@media (max-width: 576px) {
+    .company-title { font-size: 1.05rem; }
+    .company-header { padding: 0.65rem 0.1rem 1.2rem; }
+    .company-img { height: 65px; }
+    .company-content { padding: 0.7rem 0.13rem 0.2rem;}
+}
 </style>
 
 <div class="container-fluid">

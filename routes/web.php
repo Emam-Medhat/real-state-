@@ -65,6 +65,9 @@ Route::delete('property/{id}', [PropertyController::class, 'destroy'])->middlewa
 // Route::post('property/{id}/maintenance-request', [MaintenanceRequestController::class, 'sendMaintenanceRequest'])->middleware('auth')->name('property.maintenance.send');
 // // صفحة البحث
 Route::get('/property/search', [PropertyController::class, 'search'])->name('property.search');
+Route::get('/property/{id}/reserve', [PropertyController::class, 'reserve'])->name('property.reserve');
+Route::post('/property/{id}/reserve', [PropertyController::class, 'reserve'])->name('property.reserve');
+
 
 // صفحة الشركات الموثوقة
 Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
